@@ -43,20 +43,28 @@ p.lango-header {
   font-family: Helvetica;
   display: inline-block;
 }
+.bottom-row {
+  background-color: #b191d4;
+  display: flex;
+  margin-top: 2%;
+  height: 4em;
+  justify-content: flex-end;
+}
 
 #bottom-button {
+  margin-right: 3%;
   color: white;
   background-color: var(--green);
   border: none;
   display: inline-block;
   border: none;
   border-radius: 9px;
-  width: 17%;
+  width: 12%;
   font-family: Helvetica;
 }
 
 .textarea-card {
-  color:grey;
+  color: grey;
   font-size: 50px;
   height: 10em;
   width: 40%;
@@ -64,7 +72,7 @@ p.lango-header {
   overflow: hidden;
   padding: 0.5em;
   text-align: center;
-  vertical-align:middle;
+  vertical-align: middle;
   margin-right: 3%;
   word-wrap: break-word;
   border: 3px solid grey;

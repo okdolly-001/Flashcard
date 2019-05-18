@@ -1,6 +1,7 @@
 import React from 'react'
 import './css/Lango.css'
-import Header from './header.js'
+import Header from './Header.js'
+import BottomButton from './BottomButton.js'
 
 class AddCard extends React.Component {
   constructor (props) {
@@ -9,7 +10,6 @@ class AddCard extends React.Component {
       english_text: 'English',
       translation: 'Translation',
       showError: false,
-      action: 'Start Review',
       didUserType: false
     }
   }
@@ -25,14 +25,20 @@ class AddCard extends React.Component {
         translation: 'Translation',
         didUserType: false
       })
-    }, 2000)
+    }, 500)
   }
-  startTyping = e => {
-    this.setState({
-      english_text: '',
-      translation: '',
-      didUserType: true
-    })
+
+  restart = () => {
+    if (
+      this.state.english_text.length === 0 &&
+      this.state.translation.length === 0
+    ) {
+      this.reset()
+    }
+  }
+
+  startTyping = () => {
+    this.setState({ english_text: '', translation: '', didUserType: true })
   }
 
   createRequest = (method, url) => {
@@ -48,47 +54,26 @@ class AddCard extends React.Component {
         : `store?english=${this.state.english_text}&korean=${
           this.state.translation
         }`
-    let xhr = this.createRequest(requestType, url)
-
+    let xhr = this.createRequest('GET', url)
     let callbackFunction =
       requestType === 'GET' ? this.showTranslation : this.reset
     if (!xhr) {
       alert('CORS not supported')
       return
     }
-    if (requestType === 'GET') {
-      xhr.onload = function () {
-        let responseStr = xhr.responseText
-        console.log(responseStr)
-        let object = JSON.parse(responseStr)
+
+    xhr.onload = function () {
+      let responseStr = xhr.responseText
+      console.log(responseStr)
+      let object = JSON.parse(responseStr)
+      if (requestType === 'GET') {
         callbackFunction(object)
-      }
-    }
-    if (requestType === 'POST') {
-      xhr.onreadystatechange = function () {
-        // Call a function when the state changes.
-        if (this.readyState === XMLHttpRequest.DONE && this.status === 200) {
-          callbackFunction()
-        }
       }
     }
     xhr.onerror = function () {
       alert('Woops, there was an error making the request.')
     }
-
     xhr.send()
-  }
-
-  storeTranslation = () => {
-    if (
-      this.state.english_text.length === 0 ||
-      this.state.translation.length === 0
-    ) {
-      this.setState({ showError: true })
-      setTimeout(() => this.hideError(), 1000)
-    } else {
-      this.makeRequest('POST')
-    }
   }
 
   translate = e => {
@@ -104,18 +89,23 @@ class AddCard extends React.Component {
     this.setState({ translation: json.translated })
   }
 
+  storeTranslation = () => {
+    if (
+      this.state.english_text.length === 0 ||
+      this.state.translation.length === 0
+    ) {
+      this.setState({ showError: true })
+      setTimeout(() => this.hideError(), 1000)
+    } else {
+      this.makeRequest('STORE')
+    }
+  }
+
   hideError = () => {
     this.setState({ showError: false })
   }
 
-  reStart = () => {
-    if (
-      this.state.english_text.length === 0 &&
-      this.state.translation.length === 0
-    ) {
-      this.reset()
-    }
-  }
+  startReview = () => {}
 
   render () {
     const errorMessage = this.state.showError
@@ -124,31 +114,35 @@ class AddCard extends React.Component {
     const textColor = this.state.didUserType ? 'black' : 'grey'
     return (
       <div className='App'>
-        <Header action={this.state.action} />
-
+        <Header
+          clickHandler={this.startReview.bind(this)}
+          text='Start Review'
+        />
         <div className='cards-in-row'>
           <textarea
-            style={{ color: textColor }}
+            style={{
+              color: textColor
+            }}
             autoFocus
             className='textarea-card'
             value={this.state.english_text}
             onChange={this.handleChange}
             onMouseDown={this.startTyping}
             onKeyDown={this.translate}
-            onMouseLeave={this.reStart}
+            onMouseLeave={this.restart}
           />
           <textarea
-            style={{ color: textColor }}
+            style={{
+              color: textColor
+            }}
             className='textarea-card'
             value={this.state.translation}
             onChange={this.showTranslation}
           />
         </div>
-
-        <button
-          type='submit'
-          onClick={this.storeTranslation}
-          id='landing-button'
+        <BottomButton
+          clickHandler={this.storeTranslation.bind(this)}
+          text='Save'
         />
         <div className='create-card__error'>{errorMessage}</div>
       </div>

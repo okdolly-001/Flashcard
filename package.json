@@ -1,7 +1,7 @@
 {
-  "name": "minimal-react-starter",
+  "name": "FlashCard",
   "version": "0.1.0",
-  "description": "Minimal react starter project",
+  "description": "a fullstack project with react,express and sqlite",
   "main": "src/index.js",
   "scripts": {
     "compile": "webpack",
@@ -13,13 +13,12 @@
     "webpack",
     "babel",
     "minimal",
-    "starter"
+    "express"
   ],
-  "author": "Andrew H Farmer",
+  "author": "Christie Frush & Dolly Ye",
   "license": "MIT",
   "repository": {
-    "type": "git",
-    "url": "git://github.com/ahfarmer/minimal-react-starter.git"
+    "type": "git"
   },
   "dependencies": {
     "babel-cli": "^6.26.0",
@@ -38,6 +37,7 @@
   },
   "devDependencies": {
     "@babel/preset-es2015": "^7.0.0-beta.53",
-    "babel-plugin-transform-class-properties": "^6.24.1"
+    "babel-plugin-transform-class-properties": "^6.24.1",
+    "style-loader": "^0.23.1"
   }
 }

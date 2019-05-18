@@ -3,7 +3,7 @@ const path = require('path')
 module.exports = {
   mode: 'development',
   context: path.join(__dirname, 'src'),
-  entry: ['./main.js'],
+  entry: ['./main.js', './css/reset.css'],
   output: {
     path: path.join(__dirname, 'public'),
     filename: 'bundle.js'
@@ -22,7 +22,7 @@ module.exports = {
       {
         test: /\.css$/,
         exclude: /node_modules/,
-        use: ['css-loader']
+        use: ['style-loader', 'css-loader']
       }
     ]
   }

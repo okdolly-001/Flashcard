@@ -2,7 +2,7 @@ import React from 'react'
 import './css/Lango.css'
 import BottomButton from './BottomButton.js'
 
-class AddCard extends React.Component {
+class ReviewCard extends React.Component {
   constructor (props) {
     super(props)
     this.state = {
@@ -91,8 +91,7 @@ class AddCard extends React.Component {
   storeTranslation = () => {
     if (
       this.state.english_text.length === 0 ||
-      this.state.translation.length === 0 ||
-      !this.state.didUserType
+      this.state.translation.length === 0
     ) {
       this.setState({ showError: true })
       setTimeout(() => this.hideError(), 1000)
@@ -104,8 +103,6 @@ class AddCard extends React.Component {
   hideError = () => {
     this.setState({ showError: false })
   }
-
-  
 
   render () {
     const errorMessage = this.state.showError
@@ -138,7 +135,7 @@ class AddCard extends React.Component {
         </div>
         <BottomButton
           clickHandler={this.storeTranslation.bind(this)}
-          text='Save'
+          text='Next'
         />
         <div className='create-card__error'>{errorMessage}</div>
       </div>
@@ -146,4 +143,4 @@ class AddCard extends React.Component {
   }
 }
 
-export default AddCard
+export default ReviewCard

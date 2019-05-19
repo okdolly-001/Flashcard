@@ -84,3 +84,22 @@ p.lango-header {
   justify-content: center;
   flex-wrap: wrap;
 }
+
+footer {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  height: 80px;
+  width: 100%;
+  background-color: var(--darker-purple);
+  text-align: center;
+}
+
+.footer-text {
+  color:white;
+  margin-top:30px;
+  align-self: center;
+  border: 3px solid black;
+  font-family: Helvetica;
+  font-size: 1.5em;
+}

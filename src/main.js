@@ -1,10 +1,10 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
-import AddCard from './addCard'
+import WholePage from './WholePage'
 
 document.addEventListener('DOMContentLoaded', function () {
   ReactDOM.render(
-    React.createElement(AddCard),
+    React.createElement(WholePage),
     document.getElementById('mount')
   )
 })

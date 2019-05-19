@@ -1,5 +1,5 @@
 import React from 'react'
-import './css/Lango.css'
+import './css/Card.css'
 
 class Card extends React.Component {
   constructor() {

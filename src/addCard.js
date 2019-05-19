@@ -65,9 +65,7 @@ class AddCard extends React.Component {
       let responseStr = xhr.responseText
       console.log(responseStr)
       let object = JSON.parse(responseStr)
-      if (requestType === 'GET') {
-        callbackFunction(object)
-      }
+      callbackFunction(object)
     }
     xhr.onerror = function () {
       alert('Woops, there was an error making the request.')
@@ -104,8 +102,6 @@ class AddCard extends React.Component {
   hideError = () => {
     this.setState({ showError: false })
   }
-
-  
 
   render () {
     const errorMessage = this.state.showError

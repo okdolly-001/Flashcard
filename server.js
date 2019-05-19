@@ -55,7 +55,7 @@ function reqTranslation (item, res) {
 
 function createCardHandler (req, res, next) {
   let qObj = req.query
-  console.log("store ", qObj)
+  console.log('store ', qObj)
   if (qObj != undefined) {
     db.run(
       `INSERT INTO flashcards (user, english, korean, seen, correct)VALUES(?,?,?,?,?)`,
@@ -71,10 +71,11 @@ function createCardHandler (req, res, next) {
     next()
   }
 }
-function dumpHandler () {
+function dumpHandler (req, res, next) {
   db.all('SELECT * FROM flashcards', dataCallback)
   function dataCallback (err, data) {
-    console.log(data)
+    res.json({ data: data })
+    console.log('can we transmit this')
   }
 }
 

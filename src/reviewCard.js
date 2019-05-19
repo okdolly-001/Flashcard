@@ -1,30 +1,21 @@
 import React from 'react'
 import './css/Lango.css'
 import BottomButton from './BottomButton.js'
+import Card from './Card.js'
 
 class ReviewCard extends React.Component {
   constructor (props) {
     super(props)
     this.state = {
-      english_text: 'English',
-      translation: 'Translation',
-      showError: false,
-      didUserType: false
+      cards: [],
+      currentCard: {}
     }
   }
-
+  componentDidMount () {
+    this.makeRequest()
+  }
   handleChange = e => {
     this.setState({ english_text: e.target.value })
-  }
-
-  reset = () => {
-    setTimeout(() => {
-      this.setState({
-        english_text: 'English',
-        translation: 'Translation',
-        didUserType: false
-      })
-    }, 500)
   }
 
   restart = () => {
@@ -46,28 +37,18 @@ class ReviewCard extends React.Component {
     return xhr
   }
 
-  makeRequest = requestType => {
-    let url =
-      requestType === 'GET'
-        ? `translate?english=${this.state.english_text}`
-        : `store?english=${this.state.english_text}&korean=${
-          this.state.translation
-        }`
+  makeRequest = () => {
+    let url = `dump`
     let xhr = this.createRequest('GET', url)
-    let callbackFunction =
-      requestType === 'GET' ? this.showTranslation : this.reset
+    let callbackFunction = this.loadCards
     if (!xhr) {
       alert('CORS not supported')
       return
     }
-
     xhr.onload = function () {
       let responseStr = xhr.responseText
-      console.log(responseStr)
       let object = JSON.parse(responseStr)
-      if (requestType === 'GET') {
-        callbackFunction(object)
-      }
+      callbackFunction(object)
     }
     xhr.onerror = function () {
       alert('Woops, there was an error making the request.')
@@ -75,35 +56,34 @@ class ReviewCard extends React.Component {
     xhr.send()
   }
 
-  translate = e => {
-    if (!this.state.didUserType) {
-      this.startTyping()
-    }
-    if (this.state.english_text.length !== 0 && e.key === 'Enter') {
-      this.makeRequest('GET')
-    }
-  }
-
-  showTranslation = json => {
-    this.setState({ translation: json.translated })
-  }
-
-  storeTranslation = () => {
-    if (
-      this.state.english_text.length === 0 ||
-      this.state.translation.length === 0
-    ) {
-      this.setState({ showError: true })
-      setTimeout(() => this.hideError(), 1000)
-    } else {
-      this.makeRequest('STORE')
-    }
+  // [ { user: 1,
+  //   english: 'exampl_phrase',
+  //   korean: '예시문구',
+  //   seen: 0,
+  //   correct: 0 },
+  loadCards = json => {
+    const currentCards = this.state.cards
+    console.log('json is', json)
+    currentCards.push(...json.data)
+    console.log('currentCard is', currentCards)
+    this.setState({
+      cards: currentCards,
+      currentCard: this.getRandomCard(currentCards)
+    })
   }
 
   hideError = () => {
     this.setState({ showError: false })
   }
 
+  getRandomCard = currentCards => {
+    let randomIndex = Math.floor(Math.random() * currentCards.length)
+    let card = currentCards[randomIndex]
+    if (card === this.currentCard) {
+      this.getRandomCard(currentCards)
+    }
+    return card
+  }
   render () {
     const errorMessage = this.state.showError
       ? 'Please fill in a phrase and hit Enter key'
@@ -133,10 +113,7 @@ class ReviewCard extends React.Component {
             onChange={this.showTranslation}
           />
         </div>
-        <BottomButton
-          clickHandler={this.storeTranslation.bind(this)}
-          text='Next'
-        />
+        <BottomButton clickHandler={this.nextCard.bind(this)} text='Next' />
         <div className='create-card__error'>{errorMessage}</div>
       </div>
     )

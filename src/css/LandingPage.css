@@ -1,0 +1,80 @@
+:root {
+    --darker-purple: #606b9b;
+    --light-purple: #b191d4;
+    --green: #70c7a9;
+    --gradient: linear-gradient(#606b9b, #b191d4);
+}
+body {
+    display:flex;
+    flex: 1 0 auto;
+    color:white;
+}
+.mount{
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  overflow: auto;
+  flex-direction: row;
+}
+  .titlepage{
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    overflow: auto;
+    justify-content: center;
+    flex-flow: wrap;
+    align-items: center;
+    flex: 1 auto;
+    flex-direction: row;
+    display: grid;
+  }
+  .titleSection{
+    background: linear-gradient(to bottom right,#606b9b, #b191d4);
+    color: white;
+    flex-direction: column;
+    box-shadow: 20px 5px 5px lightgrey;
+    align-content: space-around;
+    grid-column: 1;
+    padding-left: 4%;
+    padding-top: 13%;
+    align-self: stretch;
+    overflow: auto;
+  }
+
+  .landing-title {
+    font-size: 75pt;
+    color: white;
+    font-weight: 900;
+    font-family: "Raleway", sans-serif;
+  }
+  .centerMe{
+    align-self: center;
+    justify-content: flex-start
+  }
+  .signInButton{
+    font-size: 25pt;
+    color: white;
+    flex: 1;
+    grid-column: 2;
+    justify-content: center;
+    padding-left: 7%;
+    padding-right: 7%;
+  }
+  .buttonPart{
+    background-color: #70c7a9;
+    padding-right: 5%;
+    padding-left: 5%;
+    padding-top: 2%;
+    padding-bottom: 2%; 
+  }
+  
+  .landing-tagline {
+    font-size: 45pt;
+    font-weight: 300;
+    color: var(--green);
+    font-family: "Open Sans", sans-serif;
+  }

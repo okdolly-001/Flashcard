@@ -58,11 +58,11 @@ body {
   .signInButton{
     font-size: 25pt;
     color: white;
-    flex: 1;
+    /* flex: 1; */
     grid-column: 2;
     justify-content: center;
-    padding-left: 7%;
-    padding-right: 7%;
+    padding-left: 5%;
+    padding-right: 5%;
   }
   .buttonPart{
     background-color: #70c7a9;
@@ -77,4 +77,70 @@ body {
     font-weight: 300;
     color: var(--green);
     font-family: "Open Sans", sans-serif;
+  }
+  @media screen and (min-value: 751px){
+    .titlepage{
+      display: grid;
+    }
+    .titleSection{
+      grid-column: 1;
+    }
+    .signInButton{
+      grid-column: 2;
+    }
+  }
+  @media screen and (max-width: 750px) {
+    .titlepage{
+      height: 100%;
+      overflow: auto;
+      justify-content: center;
+      flex-flow: wrap;
+      align-items: center;
+  
+      display:flex;
+    }
+    .titleSection{
+      background: linear-gradient(to bottom right,#606b9b, #b191d4);
+      color: white;
+      padding-top: 25%;
+      padding-bottom: 25%;
+      padding-right: 15%;
+      height: 80%;
+      width: 100%;
+      align-self: stretch;
+      overflow: auto;
+      display:flex;
+      box-shadow: 0px 30px 30px lightgrey; 
+    }
+  
+    .landing-title {
+      font-size: 45pt;
+      color: white;
+      font-weight: 900;
+      font-family: "Raleway", sans-serif;
+    }
+    .centerMe{
+      padding-left: 35px;
+      align-self: center;
+      justify-content: center;
+    }
+    .signInButton{
+      font-size: 20pt;
+      padding-bottom: 15%;
+      padding-top: 15%;
+      color: white;
+  
+      align-self: flex-end;
+    }
+    .buttonPart{
+      background-color: #70c7a9;
+      width: 100%;
+    }
+    
+    .landing-tagline {
+      font-size: 22pt;
+      font-weight: 300;
+      color: var(--green);
+      font-family: "Open Sans", sans-serif;
+    }
   }

@@ -1,5 +1,5 @@
 import React from 'react'
-import './css/Lango.css'
+import './css/BottomButton.css'
 
 const BottomButton = props => (
   <div className='bottom-row'>

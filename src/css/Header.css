@@ -1,0 +1,31 @@
+:root {
+  --darker-purple: #606b9b;
+}
+
+.header {
+  width: 100%;
+  max-height: 14rem;
+  display: flex;
+}
+
+p.lango-header {
+  position: absolute;
+  font-size: 5em;
+  font-family: "Raleway Black", sans-serif;
+  font-style: bold;
+  color: var(--darker-purple);
+  margin-top: 2%;
+  margin-left: 50%;
+}
+
+#header-button {
+  color: white;
+  background-color: var(--darker-purple);
+  margin-top: 3%;
+  margin-left: 2%;
+  border: none;
+  border-radius: 9px;
+  width: 17%;
+  font-family: Helvetica;
+  display: inline-block;
+}

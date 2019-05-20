@@ -1,8 +1,9 @@
 import React, { Component } from 'react'
-import AddCard from './addCard.js'
-import ReviewCard from './reviewCard.js'
+import AddCard from './AddPage.js'
+import ReviewCard from './ReviewPage.js'
 import Header from './Header.js'
 import './css/Lango.css'
+import './css/Footer.css'
 
 class WholePage extends Component {
   constructor (props) {

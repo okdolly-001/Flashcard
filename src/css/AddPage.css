@@ -7,6 +7,62 @@
 
 .textarea-card {
   color: grey;
+  overflow: hidden;
+  text-align: center;
+  word-wrap: break-word;
+  border: 3px solid grey;
+}
+
+
+
+@media screen and (max-width: 599px) {
+ .textarea-card {
+  color: grey;
+  font-size: 30px;
+  height: 10em;
+  width: 80%;
+  line-height: 1.5;
+  overflow: hidden;
+  padding: 0.5em;
+  text-align: center;
+  margin-right: 3%;
+  word-wrap: break-word;
+  border: 3px solid grey;
+  margin-bottom: 2%;
+}
+.cards-in-row {
+  margin-top: 5%;
+  display: flex;
+
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+}
+
+@media screen and (min-width: 600px) {
+   .textarea-card {
+  font-size: 30px;
+  height: 12em;
+  width: 45%;
+  line-height: 1.5;
+  overflow: hidden;
+  text-align: center;
+  margin-right: 2%;
+  word-wrap: break-word;
+}
+
+.cards-in-row {
+  margin-top: 10%;
+  display: flex;
+  justify-content: center;
+}
+
+}
+
+@media screen and (min-width: 1000px) {
+  .textarea-card {
   font-size: 50px;
   height: 10em;
   width: 40%;
@@ -16,7 +72,6 @@
   text-align: center;
   margin-right: 3%;
   word-wrap: break-word;
-  border: 3px solid grey;
 }
 
 .cards-in-row {
@@ -24,4 +79,7 @@
   display: flex;
   justify-content: center;
   flex-wrap: wrap;
+}
+
+  
 }

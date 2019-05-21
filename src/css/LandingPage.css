@@ -9,7 +9,7 @@ body {
     flex: 1 0 auto;
     color:white;
 }
-.mount{
+main{
   position: fixed;
   top: 0;
   left: 0;

@@ -11,3 +11,17 @@
 .container {
   padding: 2px 16px;
 }
+
+@media screen and (max-width: 599px) {
+
+
+
+}
+
+@media screen and (min-width: 600px) {
+
+}
+
+@media screen and (min-width: 1000px) {
+  
+}

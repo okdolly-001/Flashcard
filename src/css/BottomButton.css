@@ -20,6 +20,33 @@
   display: inline-block;
   border: none;
   border-radius: 9px;
-  width: 15%;
   font-family: Helvetica;
+}
+@media screen and (max-width: 599px) {
+  
+#bottom-button {
+  font-size:15px;
+  margin-right: 12%;
+  width: 18%;
+}
+
+
+}
+
+@media screen and (min-width: 600px) {
+  
+#bottom-button {
+  font-size:15px;
+  margin-right: 5%;
+  width: 12%;
+}
+}
+
+@media screen and (min-width: 1000px) {
+  
+#bottom-button {
+  margin-right: 10%;
+  border-radius: 9px;
+  width: 11%;
+}
 }

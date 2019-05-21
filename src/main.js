@@ -5,6 +5,6 @@ import WholePage from './WholePage'
 document.addEventListener('DOMContentLoaded', function () {
   ReactDOM.render(
     React.createElement(WholePage),
-    document.getElementById('mount')
+    document.body
   )
 })

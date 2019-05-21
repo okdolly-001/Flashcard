@@ -1,5 +1,6 @@
 import React from 'react'
 import './css/AddPage.css'
+import './css/Lango.css'
 import BottomButton from './BottomButton.js'
 
 class AddCard extends React.Component {
@@ -109,7 +110,7 @@ class AddCard extends React.Component {
       : ''
     const textColor = this.state.didUserType ? 'black' : 'grey'
     return (
-      <div>
+      <div className='App'>
         <div className='cards-in-row'>
           <textarea
             style={{

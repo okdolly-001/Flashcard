@@ -4,11 +4,12 @@
 }
 
 .bottom-row {
-  background-color: var(--light-purple);
   display: flex;
   margin-top: 2%;
+  margin-bottom: 2%;
   height: 4em;
   justify-content: flex-end;
+
 }
 
 #bottom-button {
@@ -19,6 +20,6 @@
   display: inline-block;
   border: none;
   border-radius: 9px;
-  width: 12%;
+  width: 15%;
   font-family: Helvetica;
 }

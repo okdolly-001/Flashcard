@@ -5,13 +5,30 @@
   --gradient: linear-gradient(#606b9b, #b191d4);
 }
 
-.App {
-  display: flex;
-  flex-direction: column;
-  min-height: 100vh;
-  background-color: pink;
+* {
+  box-sizing: border-box;
+}
+*:before,
+*:after {
+  box-sizing: border-box;
+}
+html,
+body {
+  height: 100%;
+  position: relative;
 }
 
+.App {
+  min-height: 85vh;
+  overflow: hidden;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  background-color: pink;
+  padding-bottom: 5rem; /* height of your footer */
+}
 
-
-
+main {
+  background-color: red;
+  position: relative;
+}

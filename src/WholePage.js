@@ -21,16 +21,18 @@ class WholePage extends Component {
 
   render () {
     return (
-      <div className='App'>
-        <Header
-          clickHandler={this.switchPage.bind(this)}
-          text={this.state.onCreatePage ? 'Start Review' : 'Add'}
-        />
-        {this.state.onCreatePage ? <AddCard /> : <ReviewCard />}
+      <main>
+        <div className='App'>
+          <Header
+            clickHandler={this.switchPage.bind(this)}
+            text={this.state.onCreatePage ? 'Start Review' : 'Add'}
+          />
+          {this.state.onCreatePage ? <AddCard /> : <ReviewCard />}
+        </div>
         <footer>
           <p className='footer-text'>{this.state.username}</p>
         </footer>
-      </div>
+      </main>
     )
   }
 }

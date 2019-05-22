@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import AddCard from './AddPage.js'
 import ReviewCard from './ReviewPage.js'
+import LandingPage from './LandingPage.js'
 import Header from './Header.js'
 import './css/Lango.css'
 import './css/Footer.css'
@@ -27,7 +28,7 @@ class WholePage extends Component {
             clickHandler={this.switchPage.bind(this)}
             text={this.state.onCreatePage ? 'Start Review' : 'Add'}
           />
-          {this.state.onCreatePage ? <AddCard /> : <ReviewCard />}
+          {this.state.onCreatePage ? <ReviewCard /> : <ReviewCard />}
         </div>
         <footer>
           <p className='footer-text'>{this.state.username}</p>

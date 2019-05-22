@@ -117,7 +117,7 @@ class AddCard extends React.Component {
               color: textColor
             }}
             autoFocus
-            className='textarea-card'
+            className='textarea-add'
             value={this.state.english_text}
             onChange={this.handleChange}
             onMouseDown={this.startTyping}
@@ -128,7 +128,7 @@ class AddCard extends React.Component {
             style={{
               color: textColor
             }}
-            className='textarea-card'
+            className='textarea-add'
             value={this.state.translation}
             onChange={this.showTranslation}
           />

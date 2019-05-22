@@ -2,8 +2,7 @@ import React from 'react'
 import './css/Lango.css'
 import './css/ReviewPage.css'
 import BottomButton from './BottomButton.js'
-// import Card from './Card.js'
-
+import Card from './Card.js'
 class ReviewCard extends React.Component {
   constructor (props) {
     super(props)
@@ -12,7 +11,7 @@ class ReviewCard extends React.Component {
       currentCard: {}
     }
   }
-  componentDidMount () {
+  componentDidMount() {
     this.makeRequest()
   }
   handleChange = e => {
@@ -66,11 +65,11 @@ class ReviewCard extends React.Component {
     const currentCards = this.state.cards
     console.log('json is', json)
     currentCards.push(...json.data)
-    console.log('currentCard is', currentCards)
     this.setState({
       cards: currentCards,
       currentCard: this.getRandomCard(currentCards)
     })
+    console.log('currentCard', this.state.currentCard)
   }
 
   hideError = () => {
@@ -83,38 +82,20 @@ class ReviewCard extends React.Component {
     if (card === this.currentCard) {
       this.getRandomCard(currentCards)
     }
+    console.log(card)
     return card
   }
   render () {
     const errorMessage = this.state.showError
       ? 'Please fill in a phrase and hit Enter key'
       : ''
-    const textColor = this.state.didUserType ? 'black' : 'grey'
+    if (Object.keys(this.state.currentCard).length == 0) {
+      return <div>Loading...</div>
+    }
     return (
-      <div>
-        <div className='cards-in-row'>
-          <textarea
-            style={{
-              color: textColor
-            }}
-            autoFocus
-            className='textarea-card'
-            value={this.state.english_text}
-            onChange={this.handleChange}
-            onMouseDown={this.startTyping}
-            onKeyDown={this.translate}
-            onMouseLeave={this.restart}
-          />
-          <textarea
-            style={{
-              color: textColor
-            }}
-            className='textarea-card'
-            value={this.state.translation}
-            onChange={this.showTranslation}
-          />
-        </div>
-        <BottomButton clickHandler={this.nextCard.bind(this)} text='Next' />
+      <div className='App'>
+        <Card card={this.state.currentCard} />
+        <BottomButton text='Next' />
         <div className='create-card__error'>{errorMessage}</div>
       </div>
     )

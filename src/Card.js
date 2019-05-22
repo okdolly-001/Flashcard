@@ -1,69 +1,57 @@
-// import React from 'react'
-// import './css/Card.css'
+import React from 'react'
+import './css/Card.css'
+import FlipSvg from './FlipSvg.js'
+import CorrectCard from './CorrectCard.js'
+class Card extends React.Component {
+  constructor (props) {
+    super(props)
+    this.state = {
+      question: props.card.korean,
+      answer: props.card.english,
+      userInput: '',
+      showAnswer: false,
+      isCorrect: false
+    }
+  }
 
-// class Card extends React.Component {
-//   constructor() {
-//     super()
-//     this.state = {
-//       showAnswer: false
-//     }
-//   }
+  showUserInput = e => {
+    this.setState({ userInput: e.target.value })
+  }
 
-//   render() {
-//     const content = this.state.showAnswer
-//       ? this.props.backContent
-//       : this.props.frontContent
+  flip = () => {
+    this.setState({ showAnswer: !this.state.showAnswer, isCorrect: false })
+  }
+  validate = e => {
+    if (this.state.userInput.length > 0 && e.key === 'Enter') {
+      if (this.state.userInput == this.state.answer) {
+        this.setState({ isCorrect: true })
+      } else {
+        // TO-DO
+        displayWrong()
+      }
+    }
+  }
 
-//     const cardClass = this.state.showAnswer
-//       ? 'back'
-//       : ''
-//     const contentClass = this.state.showAnswer
-//       ? 'back'
-//       : 'front'
-//     const actionClass = this.state.showAnswer
-//       ? 'active'
-//       : ''
+  render () {
+    const content = this.state.showAnswer
+      ? this.state.answer
+      : this.state.question
+    console.log('content', content)
+    return (
+      <div className='container'>
+        <div className='card'>
+          {this.state.isCorrect ? <CorrectCard /> : content}
+          <FlipSvg className='flip-svg' onClick={this.flip} />
+        </div>
+        <textarea
+          className='textarea-card'
+          onChange={this.showUserInput}
+          value={this.state.userInput}
+          onKeyDown={this.validate}
+        />
+      </div>
+    )
+  }
+}
 
-//     return (
-//       <div
-//         className={`card ${cardClass}`}
-//         onClick={() => this.setState({
-//         showAnswer: !this.state.showAnswer
-//       })}>
-//         <span className='card__counter'>{this.props.cardNumber + 1}</span>
-//         <div
-//           className='card__flip-card'
-//           onClick={() => {
-//           this.setState({
-//             showAnswer: !this.state.showAnswer
-//           })
-//         }}>
-//           <span className={`fa fa-${iconClass}`}/>
-//         </div>
-//         <adiv className={`card__content--${contentClass}`}>{content}</adiv>
-//         <div className={`card__actions ${actionClass}`}>
-//           <div
-//             className='card__prev-button'
-//             onClick={() => {
-//             this
-//               .props
-//               .showPrevCard()this
-//               .setState({showAnswer: false})
-//           }}>
-//             Prev
-//           </div>
-//           <div
-//             className='card__next-button'
-//             onClick={() => {
-//             this
-//               .props
-//               .showNextCard()this
-//               .setState({showAnswer: false})
-//           }}>
-//             Next
-//           </div>
-//         </div>
-//       </div>
-//     )
-//   }
-// }
+export default Card

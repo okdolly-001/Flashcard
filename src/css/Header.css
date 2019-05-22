@@ -11,6 +11,7 @@ p.lango-header {
   position: absolute;
   font-family: "Raleway", sans-serif;
   color: var(--darker-purple);
+  font-weight: bold;
 }
 
 #header-button {

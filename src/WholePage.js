@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
-import AddCard from './AddPage.js'
-import ReviewCard from './ReviewPage.js'
-import Header from './Header.js'
+import AddCard from './AddPage'
+import ReviewCard from './ReviewPage'
+import Header from './Header'
 import './css/Lango.css'
 import './css/Footer.css'
 

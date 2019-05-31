@@ -1,7 +1,6 @@
 const getDb = require('./db').getDb
 
-
-function isAuthenticated(req, res, next) {
+function isAuthenticated (req, res, next) {
   if (req.user) {
     console.log('Req.session:', req.session)
     console.log('Req.user:', req.user)
@@ -15,7 +14,7 @@ function isAuthenticated(req, res, next) {
   next()
 }
 
-function gotProfile(accessToken, refreshToken, profile, done) {
+function gotProfile (accessToken, refreshToken, profile, done) {
   console.log('Google profile', profile)
   let dbRowID = 0
   getDb().get(
@@ -38,15 +37,6 @@ function gotProfile(accessToken, refreshToken, profile, done) {
                 return console.log('error adding card into database')
               }
               dbRowID = profile.id
-              console.log(
-                'dbRow id is ' +
-                  dbRowID +
-                  ' ' +
-                  profile.name.givenName +
-                  ' ' +
-                  profile.name.familyName
-              )
-              console.log('gotProfile row id is ' + dbRowID)
               done(null, dbRowID)
             }
           )
@@ -55,9 +45,46 @@ function gotProfile(accessToken, refreshToken, profile, done) {
     }
   )
 }
+function loginSuccess (req, res) {
+  console.log('Logged in and using cookies!')
+  res.redirect('/')
+}
 
+function deserializeUser (dbRowID, done) {
+  getDb().get(
+    `SELECT google_id id, first_name firstName, last_name lastName FROM
+    userinfo WHERE google_id = ?`,
+    [dbRowID.toString()],
+    (err, row) => {
+      if (err) {
+        console.log(err)
+      } else {
+        console.log('user row')
+        if (row) {
+          let userData = {
+            google_id: row.id,
+            first_name: row.firstName,
+            last_name: row.lastName
+          }
+          done(null, userData)
+        } else {
+          console.log('deserializer')
+          res.redirect('/login')
+        }
+      }
+    }
+  )
+}
+
+function printURL (req, res, next) {
+  console.log(req.url)
+  next()
+}
 
 module.exports = {
   isAuthenticated,
-  gotProfile
+  gotProfile,
+  deserializeUser,
+  loginSuccess,
+  printURL
 }

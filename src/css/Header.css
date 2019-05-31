@@ -16,63 +16,70 @@ p.lango-header {
 
 #header-button {
   color: white;
+  text-align: center;
   background-color: var(--darker-purple);
-  margin-top: 3%;
-  margin-left: 2%;
   border: none;
   border-radius: 9px;
   font-family: Helvetica;
+  text-decoration: none !important;
+}
+#log-out-button {
+  color: white;
+  text-align: center;
+  background-color: var(--darker-purple);
+  border: none;
+  border-radius: 9px;
+  font-family: Helvetica;
+  text-decoration: none !important;
 }
 @media screen and (max-width: 599px) {
-  .header {
-    width: 100%;
-    display: flex;
-  }
-
   p.lango-header {
-    position: absolute;
+    margin-top: 4%;
+    align-items: center;
     font-size: 4em;
-    font-style: bold;
-    margin-left: 35%;
+    margin-left: 32%;
   }
 
   #header-button {
-    color: white;
-    background-color: var(--darker-purple);
     margin-top: 6%;
     margin-left: 2%;
-    border: none;
-    border-radius: 9px;
-    width: 30%;
+    width: 24%;
     font-size: 15px;
-    display:block;
+  }
+
+  #log-out-button {
+    margin-top: 6%;
+    margin-left: 50%;
+    width: 15%;
+    font-size: 15px;
   }
 }
 
 @media screen and (min-width: 600px) {
-
   .header {
     max-height: 14rem;
   }
 
   p.lango-header {
-    position: absolute;
     font-size: 5em;
-    font-style: bold;
-    margin-top: 2%;
-    margin-left: 35%;
+    margin-top: 3%;
+    margin-left: 33%;
   }
 
   #header-button {
-    color: white;
-    background-color: var(--darker-purple);
     margin-top: 8%;
-    margin-left: 2%;
-    border: none;
-    border-radius: 9px;
+    margin-left: 3%;
     width: 20%;
     font-size: 15px;
-    display:block;
+    display: block;
+  }
+
+  #log-out-button {
+    margin-top: 8%;
+    margin-left: 53%;
+    border-radius: 9px;
+    font-size: 15px;
+    display: block;
   }
 }
 
@@ -82,19 +89,21 @@ p.lango-header {
   }
 
   p.lango-header {
-    position: absolute;
     font-size: 5em;
-    font-style: bold;
-    margin-top: 2%;
+    margin-top: 1%;
     margin-left: 40%;
   }
 
   #header-button {
     margin-top: 3%;
-    margin-left: 2%;
-    border: none;
-    border-radius: 9px;
+    margin-left: 4%;
     width: 12%;
+    display: inline-block;
+  }
+  #log-out-button {
+    margin-top: 3%;
+    margin-left: 60%;
+    width: 10%;
     display: inline-block;
   }
 }

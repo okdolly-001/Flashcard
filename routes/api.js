@@ -4,8 +4,6 @@ const url =
   'https://translation.googleapis.com/language/translate/v2?key=' + APIkey
 const getDb = require('./db').getDb
 
-
-
 function translationHandler (req, res, next) {
   let qObj = req.query
   console.log(req.query)

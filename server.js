@@ -10,7 +10,6 @@ const session = require('express-session')
 const getDb = require('./routes/db').getDb
 const initDb = require('./routes/db').initDb
 
-
 const api = require('./routes/api')
 const login = require('./routes/login')
 const compiler = webpack(webpackConfig)
@@ -37,25 +36,8 @@ app.use(passport.initialize())
 
 app.use(passport.session())
 
-app.get('/auth/google', passport.authenticate('google', { scope: ['profile'] }))
-
-// Google redirects here after user successfully logs in This route has three
-// handler functions, one run after the other.
-app.get(
-  '/auth/redirect',
-  function (req, res, next) {
-    console.log('at auth/redirect')
-    next()
-  },
-  passport.authenticate('google'),
-  function (req, res) {
-    console.log('Logged in and using cookies!')
-    res.redirect('/')
-  }
-)
-
 app.use(
-  printURL,
+  login.printURL,
   login.isAuthenticated,
   webpackDevMiddleware(compiler, {
     hot: true,
@@ -68,11 +50,18 @@ app.use(
   })
 )
 
-// middleware functions
-function printURL (req, res, next) {
-  console.log(req.url)
-  next()
-}
+app.get('/auth/google', passport.authenticate('google', { scope: ['profile'] }))
+
+app.get('/logout', function (req, res) {
+  console.log('trying to log out')
+  req.logout()
+  res.redirect('/login')
+})
+
+// Google redirects here after user successfully logs in This route has three
+// handler functions, one run after the other.
+app.get('/auth/redirect',passport.authenticate('google'), login.loginSuccess)
+
 
 app.get('/', function (req, res, next) {
   res.sendFile(path.join(__dirname, './public', 'index.html'))
@@ -86,36 +75,10 @@ passport.serializeUser((dbRowID, done) => {
   done(null, dbRowID)
 })
 
-passport.deserializeUser((dbRowID, done) => {
-  getDb().get(
-    `SELECT google_id id, first_name firstName, last_name lastName FROM
-    userinfo WHERE google_id = ?`,
-    [dbRowID.toString()],
-    (err, row) => {
-      if (err) {
-        console.log(err)
-      } else {
-        console.log('user row')
-        if (row) {
-          let userData = {
-            google_id: row.id,
-            first_name: row.firstName,
-            last_name: row.lastName
-          }
-          done(null, userData)
-        } else {
-          console.log('deserializer')
-          res.redirect('/login')
-        }
-      }
-    }
-  )
-})
+passport.deserializeUser(login.deserializeUser)
 
-// Code needed for closing database
 process.on('exit', function () {
-  // any shutdown logic here
- getDb().close()
+  getDb().close()
 })
 
 app.get('/translate', api.translationHandler)
@@ -124,10 +87,11 @@ app.get('/dump', api.dumpHandler)
 app.get('/get_user', api.getUserHandler)
 app.use(api.fileNotFound)
 
+
+
 const PORT = process.env.PORT || 51375
 // app.listen(PORT, () => console.log(`Listening on port ${PORT}`))
 initDb(function (err) {
-  console.log(err);
+  console.log(err)
   app.listen(PORT, () => console.log('API Up and running on port ' + PORT))
-  console.log('inside initDb')
 })

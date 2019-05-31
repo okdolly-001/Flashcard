@@ -1,11 +1,11 @@
 const sqlite3 = require('sqlite3').verbose()
-let db = {};
+let db = null;
 function initDb (callback) {
   if (db) {
     console.warn('Trying to init DB again!')
     return callback(null, db)
   }
-  db = new sqlite3.Database('./FlashCards.db')
+  db = new sqlite3.Database('../FlashCards.db')
   return callback(null, db)
 }
 

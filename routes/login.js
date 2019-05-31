@@ -18,7 +18,7 @@ function isAuthenticated(req, res, next) {
 function gotProfile(accessToken, refreshToken, profile, done) {
   console.log('Google profile', profile)
   let dbRowID = 0
-  db.get(
+  getDb().get(
     `SELECT google_id id, first_name firstName, last_name lastName FROM userinfo WHERE google_id = ?`,
     [profile.id],
     (err, row) => {

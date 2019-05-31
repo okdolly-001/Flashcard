@@ -1,4 +1,21 @@
-function gotProfile (accessToken, refreshToken, profile, done) {
+const getDb = require('./db').getDb
+const db = getDb()
+
+function isAuthenticated(req, res, next) {
+  if (req.user) {
+    console.log('Req.session:', req.session)
+    console.log('Req.user:', req.user)
+    next()
+    return
+  } else if (req.originalUrl === '/') {
+    console.log('not logged in ?')
+    res.redirect('/login')
+    return
+  }
+  next()
+}
+
+function gotProfile(accessToken, refreshToken, profile, done) {
   console.log('Google profile', profile)
   let dbRowID = 0
   db.get(
@@ -37,4 +54,10 @@ function gotProfile (accessToken, refreshToken, profile, done) {
       }
     }
   )
+}
+
+
+module.exports = {
+  isAuthenticated,
+  gotProfile
 }

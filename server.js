@@ -2,15 +2,17 @@ const express = require('express')
 const webpackDevMiddleware = require('webpack-dev-middleware')
 const webpack = require('webpack')
 const webpackConfig = require('./webpack.config.js')
-const sqlite3 = require('sqlite3').verbose()
 const passport = require('passport')
 const GoogleStrategy = require('passport-google-oauth20')
 const cookieParser = require('cookie-parser')
 const bodyParser = require('body-parser')
 const session = require('express-session')
+const getDb = require('./routes/db').getDb
+const initDb = require('./routes/db').initDb
 
-const db = new sqlite3.Database('FlashCards.db')
-const api = require('./api.js')
+const db = getDb()
+const api = require('./routes/api')
+const login = require('./routes/login')
 const compiler = webpack(webpackConfig)
 
 const googleLoginData = {
@@ -20,9 +22,10 @@ const googleLoginData = {
   callbackURL: '/auth/redirect'
 }
 
-passport.use(new GoogleStrategy(googleLoginData, gotProfile))
+passport.use(new GoogleStrategy(googleLoginData, login.gotProfile))
 const path = require('path')
 const app = express()
+
 app.use('/css', express.static('src/css'))
 
 app.use(cookieParser())
@@ -36,8 +39,8 @@ app.use(passport.session())
 
 app.get('/auth/google', passport.authenticate('google', { scope: ['profile'] }))
 
-// Google redirects here after user successfully logs in
-// This route has three handler functions, one run after the other.
+// Google redirects here after user successfully logs in This route has three
+// handler functions, one run after the other.
 app.get(
   '/auth/redirect',
   function (req, res, next) {
@@ -53,7 +56,7 @@ app.get(
 
 app.use(
   printURL,
-  isAuthenticated,
+  login.isAuthenticated,
   webpackDevMiddleware(compiler, {
     hot: true,
     filename: 'bundle.js',
@@ -64,20 +67,6 @@ app.use(
     historyApiFallback: false
   })
 )
-
-function isAuthenticated (req, res, next) {
-  if (req.user) {
-    console.log('Req.session:', req.session)
-    console.log('Req.user:', req.user)
-    next()
-    return
-  } else if (req.originalUrl === '/') {
-    console.log('not logged in ?')
-    res.redirect('/login')
-    return
-  }
-  next()
-}
 
 // middleware functions
 function printURL (req, res, next) {
@@ -93,53 +82,11 @@ app.get('/login', function (req, res, next) {
   res.sendFile(path.join(__dirname, './public', 'login.html'))
 })
 
-function gotProfile (accessToken, refreshToken, profile, done) {
-  console.log('Google profile', profile)
-  let dbRowID = 0
-  db.get(
-    `SELECT google_id id, first_name firstName, last_name lastName FROM userinfo WHERE google_id = ?`,
-    [profile.id],
-    (err, row) => {
-      if (err) {
-        console.log(err)
-      } else {
-        if (row) {
-          dbRowID = row.id
-          done(null, dbRowID)
-        } else {
-          console.log('gotProfile need to store here')
-          db.run(
-            `INSERT INTO userinfo (google_id,first_name,last_name)VALUES(?,?,?)`,
-            [profile.id, profile.name.givenName, profile.name.familyName],
-            err => {
-              if (err) {
-                return console.log('error adding card into database')
-              }
-              dbRowID = profile.id
-              console.log(
-                'dbRow id is ' +
-                  dbRowID +
-                  ' ' +
-                  profile.name.givenName +
-                  ' ' +
-                  profile.name.familyName
-              )
-              console.log('gotProfile row id is ' + dbRowID)
-              done(null, dbRowID)
-            }
-          )
-        }
-      }
-    }
-  )
-}
-
 passport.serializeUser((dbRowID, done) => {
   done(null, dbRowID)
 })
 
 passport.deserializeUser((dbRowID, done) => {
-
   db.get(
     `SELECT google_id id, first_name firstName, last_name lastName FROM
     userinfo WHERE google_id = ?`,
@@ -178,4 +125,8 @@ app.get('/get_user', api.getUserHandler)
 app.use(api.fileNotFound)
 
 const PORT = process.env.PORT || 51375
-app.listen(PORT, () => console.log(`Listening on port ${PORT}`))
+// app.listen(PORT, () => console.log(`Listening on port ${PORT}`))
+initDb(function (err) {
+  app.listen(PORT, () => console.log('API Up and running on port ' + PORT))
+  console.log('inside initDb')
+})

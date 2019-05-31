@@ -127,6 +127,7 @@ app.use(api.fileNotFound)
 const PORT = process.env.PORT || 51375
 // app.listen(PORT, () => console.log(`Listening on port ${PORT}`))
 initDb(function (err) {
+  console.log(err);
   app.listen(PORT, () => console.log('API Up and running on port ' + PORT))
   console.log('inside initDb')
 })

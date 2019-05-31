@@ -1,5 +1,5 @@
 const sqlite3 = require('sqlite3').verbose()
-let db
+let db = {};
 function initDb (callback) {
   if (db) {
     console.warn('Trying to init DB again!')

@@ -1,5 +1,5 @@
 const getDb = require('./db').getDb
-const db = getDb()
+
 
 function isAuthenticated(req, res, next) {
   if (req.user) {

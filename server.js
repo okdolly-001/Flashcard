@@ -10,7 +10,7 @@ const session = require('express-session')
 const getDb = require('./routes/db').getDb
 const initDb = require('./routes/db').initDb
 
-const db = getDb()
+
 const api = require('./routes/api')
 const login = require('./routes/login')
 const compiler = webpack(webpackConfig)
@@ -87,7 +87,7 @@ passport.serializeUser((dbRowID, done) => {
 })
 
 passport.deserializeUser((dbRowID, done) => {
-  db.get(
+  getDb().get(
     `SELECT google_id id, first_name firstName, last_name lastName FROM
     userinfo WHERE google_id = ?`,
     [dbRowID.toString()],
@@ -115,7 +115,7 @@ passport.deserializeUser((dbRowID, done) => {
 // Code needed for closing database
 process.on('exit', function () {
   // any shutdown logic here
-  db.close()
+ getDb().close()
 })
 
 app.get('/translate', api.translationHandler)

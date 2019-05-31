@@ -5,7 +5,8 @@ function initDb (callback) {
     console.warn('Trying to init DB again!')
     return callback(null, db)
   }
-  db = new sqlite3.Database('../FlashCards.db')
+  db = new sqlite3.Database('./FlashCards.db')
+
   return callback(null, db)
 }
 
@@ -14,6 +15,8 @@ function getDb () {
     console.warn('DB is not initiated!')
     return
   }
+  console.warn('DB is initiated!')
+
   return db
 }
 module.exports = {

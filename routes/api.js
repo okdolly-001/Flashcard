@@ -4,7 +4,7 @@ const url =
   'https://translation.googleapis.com/language/translate/v2?key=' + APIkey
 const getDb = require('./db').getDb
 
-const db = getDb()
+
 
 function translationHandler (req, res, next) {
   let qObj = req.query
@@ -61,7 +61,7 @@ function createCardHandler (req, res, next) {
   if (req.user) {
     if (req.query != undefined) {
       console.log('create card ' + req.user.google_id)
-      db.run(
+      getDb().run(
         `INSERT INTO flashcards (google_id, english, korean, seen, correct)VALUES(?,?,?,?,?)`,
         [req.user.google_id, req.query.english, req.query.korean, 0, 0],
         err => {
@@ -79,7 +79,7 @@ function createCardHandler (req, res, next) {
 
 function dumpHandler (req, res) {
   if (req.user) {
-    db.all(
+    getDb().all(
       'SELECT * FROM flashcards WHERE google_id = ?',
       [req.user.google_id],
       dataCallback

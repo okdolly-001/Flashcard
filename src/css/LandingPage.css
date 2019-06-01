@@ -55,22 +55,14 @@ body {
     align-self: center;
     justify-content: flex-start
   }
-  .signInButton{
-    font-size: 25pt;
-    color: white;
-    /* flex: 1; */
+  .sign-in-button{
     grid-column: 2;
     justify-content: center;
     padding-left: 5%;
     padding-right: 5%;
+    text-decoration: none
   }
-  .buttonPart{
-    background-color: #70c7a9;
-    padding-right: 5%;
-    padding-left: 5%;
-    padding-top: 2%;
-    padding-bottom: 2%; 
-  }
+ 
   
   .landing-tagline {
     font-size: 45pt;
@@ -85,7 +77,7 @@ body {
     .titleSection{
       grid-column: 1;
     }
-    .signInButton{
+    .sign-in-button{
       grid-column: 2;
     }
   }
@@ -124,7 +116,7 @@ body {
       align-self: center;
       justify-content: center;
     }
-    .signInButton{
+    sign-in-button{
       font-size: 20pt;
       padding-bottom: 15%;
       padding-top: 15%;
@@ -132,10 +124,7 @@ body {
   
       align-self: flex-end;
     }
-    .buttonPart{
-      background-color: #70c7a9;
-      width: 100%;
-    }
+
     
     .landing-tagline {
       font-size: 22pt;
@@ -143,4 +132,3 @@ body {
       color: var(--green);
       font-family: "Open Sans", sans-serif;
     }
-  }

@@ -1,8 +1,7 @@
 import React, { Component } from 'react'
-import AddCard from './AddPage.js'
-import ReviewCard from './ReviewPage.js'
-import LandingPage from './LandingPage.js'
-import Header from './Header.js'
+import AddCard from './AddPage'
+import ReviewCard from './ReviewPage'
+import Header from './Header'
 import './css/Lango.css'
 import './css/Footer.css'
 
@@ -11,13 +10,46 @@ class WholePage extends Component {
     super(props)
     this.state = {
       onCreatePage: true,
-      username: 'Username'
+      username: 'Username',
+      google_id: ''
     }
+  }
+  componentDidMount () {
+    this.makeRequest()
   }
   switchPage = () => {
     this.setState(prevState => ({
       onCreatePage: !prevState.onCreatePage
     }))
+  }
+  createRequest = (method, url) => {
+    let xhr = new XMLHttpRequest()
+    xhr.open(method, url, true)
+    return xhr
+  }
+
+  makeRequest = () => {
+    let url = `get_user`
+    let xhr = this.createRequest('GET', url)
+    let callbackFunction = this.setUsername
+    if (!xhr) {
+      alert('CORS not supported')
+      return
+    }
+    xhr.onload = function () {
+      let responseStr = xhr.responseText
+      console.log(responseStr)
+      let object = JSON.parse(responseStr)
+      callbackFunction(object)
+    }
+    xhr.onerror = function () {
+      alert('Woops, there was an error making the request.')
+    }
+    xhr.send()
+  }
+
+  setUsername = json => {
+    this.setState({ username: json.name, google_id: json.google_id })
   }
 
   render () {
@@ -28,7 +60,11 @@ class WholePage extends Component {
             clickHandler={this.switchPage.bind(this)}
             text={this.state.onCreatePage ? 'Start Review' : 'Add'}
           />
-          {this.state.onCreatePage ? <ReviewCard /> : <ReviewCard />}
+          {this.state.onCreatePage ? (
+            <AddCard google_id={this.state.google_id} />
+          ) : (
+            <ReviewCard google_id={this.state.google_id} />
+          )}
         </div>
         <footer>
           <p className='footer-text'>{this.state.username}</p>

@@ -10,11 +10,11 @@ const Header = props => (
         props.clickHandler()
       }}
     >
-      {props.text}
+    <p>  {props.text}</p> 
     </a>
     <p className='lango-header'>Lango!</p>
     <a href="/logout" className = 'btn-primary btn-lg'
- id="log-out-button">Log out</a>
+ id="log-out-button"> <p>Log out</p> </a>
   </div>
 )
 

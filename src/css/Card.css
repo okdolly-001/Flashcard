@@ -8,16 +8,58 @@
   overflow: hidden;
   text-align: center;
   word-wrap: break-word;
-  border: 3px solid grey;
   position: relative;
   display: flex;
+  flex-direction: column;
   justify-content: center;
+  align-items: center;
 }
 .textarea-card {
-  padding-top: calc(130px - 0.1em);
-  border: 3px solid grey;
+  border: 2px solid grey;
+  margin-top: 10%;
+  width: 75%;
 }
-
+.card-container {
+  min-height: 100px;
+  margin-top: 40px;
+  width: 75%;
+  padding: 0;
+  /* top: 20px; */
+  position: relative;
+  transform-style: preserve-3d;
+  box-sizing: border-box;
+}
+.card-container.flipped .front {
+    transform: rotateY(180deg);
+  }
+.card-container.flipped .back {
+    transform: rotateY(0deg);
+  }
+.card-container .front, .card-container .back {
+    box-sizing: border-box;
+    border: 2px solid grey;
+    display: flex;
+    width: 100%;
+    height: 100%;
+    /* box-shadow: 10px 10px 5px #5f4d63; */
+    padding: 10px;
+    position: absolute;
+    backface-visibility: hidden;
+    transform-style: preserve-3d;
+    transition: -webkit-transform ease 500ms;
+    transition: transform ease 500ms;
+  }
+.card-container .front {
+    z-index: 2;
+    font-size: 20px;
+    transform: rotateY(0deg);
+    /* front tile styles go here! */
+  }
+.card-container .back {
+    transform: rotateY(-180deg);
+    font-size: 20px;
+    /* back tile styles go here! */
+  }
 .flip-svg {
   position: absolute;
   top: 0px;
@@ -39,41 +81,4 @@ p.correct {
   color: green;
   font-weight: bold;
 }
-@media screen and (max-width: 599px) {
-  .container {
-    margin-top:10%;
-  }
-  .card {
-    height:15em;
-    margin-bottom: 3%;
-    padding-top:5em;
-  }
-  .textarea-card {
-    height:5em;
-  }
-}
 
-@media screen and (min-width: 600px) {
-  .container {
-    margin-top: 7%;
-  }
-  .card {
-    padding-top: calc(80px - 0.1em);
-    font-size: 30px;
-    height: 8em;
-    width: 100%;
-    margin-bottom: 5%;
-  }
-
-  .textarea-card {
-    padding-top: 0;
-    font-size: 30px;
-    height: 6em;
-    width: 100%;
-    line-height: 1.5;
-    text-align: center;
-  }
-}
-
-@media screen and (min-width: 1000px) {
-}

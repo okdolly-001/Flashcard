@@ -116,6 +116,7 @@ class AddCard extends React.Component {
             style={{
               color: textColor
             }}
+            id='addMiddlePadding'
             autoFocus
             className='textarea-add'
             value={this.state.english_text}

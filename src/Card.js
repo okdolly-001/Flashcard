@@ -6,8 +6,6 @@ class Card extends React.Component {
   constructor (props) {
     super(props)
     this.state = {
-      question: props.card.korean,
-      answer: props.card.english,
       userInput: '',
       showAnswer: false,
       isCorrect: false
@@ -25,6 +23,7 @@ class Card extends React.Component {
     if (this.state.userInput.length > 0 && e.key === 'Enter') {
       if (this.state.userInput == this.state.answer) {
         this.setState({ isCorrect: true })
+        this.props.correctHandler(props.card)
       } else {
         // TO-DO
         displayWrong()
@@ -34,8 +33,8 @@ class Card extends React.Component {
 
   render () {
     const content = this.state.showAnswer
-      ? this.state.answer
-      : this.state.question
+      ? this.props.answer
+      : this.props.question
     console.log('content', content)
     return (
       <div className='container'>

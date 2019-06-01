@@ -29,7 +29,7 @@ function gotProfile (accessToken, refreshToken, profile, done) {
           done(null, dbRowID)
         } else {
           console.log('gotProfile need to store here')
-          db.run(
+          getDb().run(
             `INSERT INTO userinfo (google_id,first_name,last_name)VALUES(?,?,?)`,
             [profile.id, profile.name.givenName, profile.name.familyName],
             err => {

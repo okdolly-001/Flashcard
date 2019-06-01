@@ -4,6 +4,8 @@ const url =
   'https://translation.googleapis.com/language/translate/v2?key=' + APIkey
 const getDb = require('./db').getDb
 
+const db = getDb()
+
 function translationHandler (req, res, next) {
   let qObj = req.query
   console.log(req.query)
@@ -17,7 +19,7 @@ function translationHandler (req, res, next) {
 function reqTranslation (item, res) {
   let requestObject = {
     source: 'en',
-    target: 'ko',
+    target: 'zh-CN',
     q: [item]
   }
   // callback function, called when data is received from API
@@ -60,8 +62,8 @@ function createCardHandler (req, res, next) {
     if (req.query != undefined) {
       console.log('create card ' + req.user.google_id)
       getDb().run(
-        `INSERT INTO flashcards (google_id, english, korean, seen, correct)VALUES(?,?,?,?,?)`,
-        [req.user.google_id, req.query.english, req.query.korean, 0, 0],
+        `INSERT INTO flashcards (google_id, english, chinese, seen, correct)VALUES(?,?,?,?,?)`,
+        [req.user.google_id, req.query.english, req.query.chinese, 0, 0],
         err => {
           if (err) {
             return console.log(err)
@@ -97,6 +99,42 @@ function getUserHandler (req, res) {
   }
 }
 
+function incrementSeenHandler (req, res) {
+  if (req.user) {
+    getDb().run(
+      'UPDATE flashcards SET seen = seen + 1 WHERE id = ?',
+      [req.params.id],
+      dataCallback
+    )
+    function dataCallback (err) {
+      console.log('increment seen')
+      if (err) {
+        return console.log(err.message)
+      }
+    }
+  } else {
+    return res.redirect('/login')
+  }
+}
+
+function incrementCorrectHandler (req, res) {
+  if (req.user) {
+    getDb().run(
+      'UPDATE flashcards SET correct = correct + 1 WHERE id = ?',
+      [req.params.id],
+      dataCallback
+    )
+    function dataCallback (err) {
+      console.log('increment correct')
+      if (err) {
+        return console.log(err.message)
+      }
+    }
+  } else {
+    return res.redirect('/login')
+  }
+}
+
 function fileNotFound (req, res) {
   let url = req.url
   res.type('text/plain')
@@ -109,6 +147,8 @@ module.exports = {
   dumpHandler,
   createCardHandler,
   reqTranslation,
+  incrementSeenHandler,
+  incrementCorrectHandler,
   fileNotFound,
   getUserHandler
 }

@@ -51,7 +51,7 @@ class AddCard extends React.Component {
     let url =
       requestType === 'GET'
         ? `translate?english=${this.state.english_text}`
-        : `store?english=${this.state.english_text}&korean=${
+        : `store?english=${this.state.english_text}&chinese=${
           this.state.translation
         }`
     let xhr = this.createRequest('GET', url)

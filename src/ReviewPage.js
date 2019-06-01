@@ -11,8 +11,8 @@ class ReviewCard extends React.Component {
       currentCard: {}
     }
   }
-  componentDidMount() {
-    this.makeRequest()
+  componentDidMount () {
+    this.makeRequest('dump', 'GET', this.loadCards)
   }
   handleChange = e => {
     this.setState({ english_text: e.target.value })
@@ -37,18 +37,20 @@ class ReviewCard extends React.Component {
     return xhr
   }
 
-  makeRequest = () => {
-    let url = `dump`
-    let xhr = this.createRequest('GET', url)
-    let callbackFunction = this.loadCards
+  makeRequest = (url, action, callbackFunction) => {
+    let xhr = this.createRequest(action, url)
     if (!xhr) {
       alert('CORS not supported')
       return
     }
-    xhr.onload = function () {
-      let responseStr = xhr.responseText
-      let object = JSON.parse(responseStr)
-      callbackFunction(object)
+    if (action === 'GET') {
+      xhr.onload = function () {
+        let responseStr = xhr.responseText
+        let object = JSON.parse(responseStr)
+        if (callbackFunction) {
+          callbackFunction(object)
+        }
+      }
     }
     xhr.onerror = function () {
       alert('Woops, there was an error making the request.')
@@ -56,35 +58,69 @@ class ReviewCard extends React.Component {
     xhr.send()
   }
 
-  // [ { user: 1,
-  //   english: 'exampl_phrase',
-  //   korean: '예시문구',
-  //   seen: 0,
-  //   correct: 0 },
+  // [ { id: 1,    google_id : ''   english: 'exampl_phrase',   chinese: '예시문구',
+  // seen: 0,   correct: 0 },
+
   loadCards = json => {
-    const currentCards = this.state.cards
-    console.log('json is', json)
-    currentCards.push(...json.data)
-    this.setState({
-      cards: currentCards,
-      currentCard: this.getRandomCard(currentCards)
-    })
-    console.log('currentCard', this.state.currentCard)
+    const preload = this.state.cards
+    preload.push(...json.data)
+    if (preload.length != 0) {
+      this.setState({
+        cards: preload,
+        currentCard: this.getRandomCard(preload)
+      })
+    }
   }
 
   hideError = () => {
     this.setState({ showError: false })
   }
 
-  getRandomCard = currentCards => {
-    let randomIndex = Math.floor(Math.random() * currentCards.length)
-    let card = currentCards[randomIndex]
-    if (card === this.currentCard) {
-      this.getRandomCard(currentCards)
+  getRandomCard = preload => {
+    let randomIndex = Math.floor(Math.random() * preload.length)
+    let card = preload[randomIndex]
+    if (Object.keys(this.state.currentCard).length === 0) {
+      console.log(this.state.currentCard)
+      this.incrementSeen(card)
+      return card
     }
-    console.log(card)
-    return card
+    if (card.id === this.state.currentCard.id) {
+      return this.getRandomCard(preload)
+    }
+    console.log('correct and seen ' + card.correct / 2 + ' ' + card.seen)
+
+    let score =
+      Math.max(1, 5 - Number(card.correct)) +
+      Math.max(1, 5 - Number(card.seen)) +
+      (6 * (Number(card.seen) - Number(card.correct))) / (Number(card.seen) + 1)
+
+    let threshold = Math.floor(Math.random() * 15)
+    console.log('threshhold id ' + threshold + ' score is: ' + score)
+    if (Number(card.seen) === 0 || threshold <= score) {
+      console.log(card)
+      this.incrementSeen(card)
+      return card
+    } else {
+      return this.getRandomCard(preload)
+    }
   }
+
+  incrementSeen = card => {
+    this.makeRequest(`seen/${card.id}`, 'POST', null)
+  }
+
+  incrementCorrect = card => {
+    this.makeRequest(`correct/${card.id}`, 'POST', null)
+  }
+
+  getNextCard = () => {
+    // console.log('inside getNext card ' + this.state.cards.length)
+    // const cards = this.state.cards
+    // const card = this.getRandomCard(cards)
+    // console.log(card)
+    this.setState({ currentCard: this.getRandomCard(this.state.cards) })
+  }
+
   render () {
     const errorMessage = this.state.showError
       ? 'Please fill in a phrase and hit Enter key'
@@ -94,8 +130,13 @@ class ReviewCard extends React.Component {
     }
     return (
       <div className='App'>
-        <Card card={this.state.currentCard} />
-        <BottomButton text='Next' />
+        <Card
+          key={this.state.currentCard}
+          question={this.state.currentCard.chinese}
+          answer={this.state.currentCard.english}
+          correctHandler={this.incrementCorrect}
+        />
+        <BottomButton clickHandler={this.getNextCard.bind(this)} text='Next' />
         <div className='create-card__error'>{errorMessage}</div>
       </div>
     )

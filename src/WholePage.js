@@ -67,7 +67,12 @@ class WholePage extends Component {
           )}
         </div>
         <footer>
-          <p className='footer-text'>{this.state.username}</p>
+        <div>
+            <div className='phantom' />
+            <div className='style'>
+            <p className='footer-text'>{this.state.username}</p>
+            </div>
+        </div>
         </footer>
       </main>
     )

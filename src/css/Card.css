@@ -125,6 +125,14 @@ p.correct {
   font-size: 40px;
   font-weight: bold;
 }
+ 
+
+@media screen and (min-width: 450px) {
+  .textarea-card {
+    margin-top: 5%;
+  }
+
+}
 
 .wrong-card {
   

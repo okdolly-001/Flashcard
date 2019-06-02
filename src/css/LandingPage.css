@@ -7,38 +7,50 @@
 
 html,
 body {
+
+  /* background: pink; */
+}
+
+.titlePage {
   display: flex;
-  background: pink;
+  height:100%;
+  flex-direction: column;
+}
+.titleBox{
+
 }
 
 .titleSection {
-  width: 50%;
   display: flex;
-  flex-wrap: wrap;
-  padding: 10%;
   background: linear-gradient(to bottom right, #606b9b, #b191d4);
   color: white;
-  flex-direction: column;
+  align-items: center;
+  justify-content: center;
   box-shadow: 20px 5px 5px lightgrey;
+  flex-direction: column;
   overflow: auto;
+  flex-grow: 3;
 }
+
 
 .landing-title {
   color: white;
   font-weight: 900;
+  font-size: 60px;
   font-family: "Raleway", sans-serif;
 }
 
 .sign-in-button {
-  width: 60%;
   display: flex;
   justify-content: center;
   align-items: center;
   text-decoration: none;
+  flex-grow: 2;
 }
 
 .landing-tagline {
   font-weight: 300;
+  font-size: 20px;
   color: var(--green);
   font-family: "Open Sans", sans-serif;
 }
@@ -76,72 +88,27 @@ body {
   font-family: "Roboto", arial, sans-serif;
 }
 
-@media screen and (max-width: 599px) {
-  html,
-  body {
-    display: flex;
-    flex-direction: column;
-  }
-  .titleSection {
-    padding:12%;
 
-    min-width: 100%;
-    height: 20em;
-    font-size: 15pt;
+@media screen and (min-width: 800px) {
+  .titlePage{
+    flex-direction: row;
+    height: 100%
   }
-
-  .landing-title {
-    font-size: 35pt;
+  .sign-in-button{
+    padding-left: 10%;
+    padding-right: 10%;
   }
-
-  .sign-in-button {
-    margin-top: 20%;
-    width: 100%;
+  .landing-tagline {
+    font-size: 25px;
   }
 }
 
 @media screen and (min-width: 600px) {
-  body {
-    display: flex;
-    flex-direction: column;
-  }
-
-  .landing-title {
-    font-size: 65pt;
-  }
-  .titleSection {
-    min-width: 100%;
-    margin: 0;
-    font-size: 30pt;
-  }
-  .sign-in-button {
-    display: flex;
-    margin-top: 20%;
-    align-items: center;
-    justify-content: center;
-    width: 100%;
-    background: yellow;
-  }
+ .landing-title{
+   font-size: 72px;
+   
+ }
+ .landing-tagline {
+  font-size: 22px;
 }
-
-@media screen and (min-width: 1000px) {
-  body {
-    display: flex;
-    flex-direction: row;
-  }
-
-
-  .titleSection {
-    min-width: 100%;
-    margin: 0;
-     width: 50%;
-
-    font-size: 30pt;
-  }
-    .landing-title {
-    font-size: 65pt;
-  }
-  .sign-in-button {
-    width: 100%;
-  }
 }

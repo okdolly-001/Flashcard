@@ -6,10 +6,8 @@ class LandingPage extends React.Component {
       return (
         <div className='titlepage'>
             <div className='titleSection'>
-            <div className='centerMe'>
               <div className='landing-title '>Welcome to Lango</div>
               <div className='landing-tagline'>Customize your vocabulary</div>
-            </div>
             </div>
             <div className='signInButton'>
               <div className='buttonPart'>

@@ -112,6 +112,7 @@ class AddCard extends React.Component {
     return (
       <div className='App'>
         <div className='cards-in-row'>
+          <div className='cardBox'>
           <textarea
             style={{
               color: textColor
@@ -124,6 +125,8 @@ class AddCard extends React.Component {
             onKeyDown={this.translate}
             onMouseLeave={this.restart}
           />
+          </div>
+          <div className='cardBox'>
           <textarea
             style={{
               color: textColor
@@ -132,6 +135,7 @@ class AddCard extends React.Component {
             value={this.state.translation}
             onChange={this.showTranslation}
           />
+          </div>
         </div>
         <BottomButton
           clickHandler={this.storeTranslation.bind(this)}

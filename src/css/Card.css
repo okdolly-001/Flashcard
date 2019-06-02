@@ -13,56 +13,54 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  flex-grow: 1;
 }
 .textarea-card {
   border: 2px solid grey;
   margin-top: 10%;
   width: 75%;
-  flex-grow: 1;
 }
 .card-container {
   min-height: 100px;
   margin-top: 40px;
   width: 75%;
   padding: 0;
-  flex-grow: 3;
   /* top: 20px; */
   position: relative;
   transform-style: preserve-3d;
   box-sizing: border-box;
 }
 .card-container.flipped .front {
-    transform: rotateY(180deg);
-  }
+  transform: rotateY(180deg);
+}
 .card-container.flipped .back {
-    transform: rotateY(0deg);
-  }
-.card-container .front, .card-container .back {
-    box-sizing: border-box;
-    border: 2px solid grey;
-    display: flex;
-    width: 100%;
-    height: 100%;
-    /* box-shadow: 10px 10px 5px #5f4d63; */
-    padding: 10px;
-    position: absolute;
-    backface-visibility: hidden;
-    transform-style: preserve-3d;
-    transition: -webkit-transform ease 500ms;
-    transition: transform ease 500ms;
-  }
-.card-container .front {
-    z-index: 2;
-    font-size: 20px;
-    transform: rotateY(0deg);
-    /* front tile styles go here! */
-  }
+  transform: rotateY(0deg);
+}
+.card-container .front,
 .card-container .back {
-    transform: rotateY(-180deg);
-    font-size: 20px;
-    /* back tile styles go here! */
-  }
+  box-sizing: border-box;
+  border: 2px solid grey;
+  display: flex;
+  width: 100%;
+  height: 100%;
+  /* box-shadow: 10px 10px 5px #5f4d63; */
+  padding: 10px;
+  position: absolute;
+  backface-visibility: hidden;
+  transform-style: preserve-3d;
+  transition: -webkit-transform ease 500ms;
+  transition: transform ease 500ms;
+}
+.card-container .front {
+  z-index: 2;
+  font-size: 20px;
+  transform: rotateY(0deg);
+  /* front tile styles go here! */
+}
+.card-container .back {
+  transform: rotateY(-180deg);
+  font-size: 20px;
+  /* back tile styles go here! */
+}
 .flip-svg {
   position: absolute;
   top: 0px;
@@ -79,9 +77,19 @@
   align-items: center;
 }
 
-p.correct {
-  margin: auto;
-  color: green;
-  font-weight: bold;
+.wrong-card {
+  position: absolute;
+  width: 40%;
+  height: 4em;
+  background-color: pink;
+  border: 3px solid paleturquoise;
+  text-align: center;
+  display: flex;
+  align-items: center;
 }
 
+p.wrong {
+  margin: auto;
+  color: #FF00BF;
+  font-weight: bold;
+}

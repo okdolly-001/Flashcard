@@ -6,8 +6,8 @@
 .bottom-row {
   display: flex;
   margin-top: 5%;
-  margin-bottom: 5%;
-  height: 4em;
+  margin-bottom: 2%;
+  height: 3em;
   justify-content: flex-end;
 }
 

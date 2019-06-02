@@ -51,7 +51,7 @@ class AddCard extends React.Component {
     let url =
       requestType === 'GET'
         ? `translate?english=${this.state.english_text}`
-        : `store?english=${this.state.english_text}&chinese=${
+        : `store?english=${this.state.english_text}&korean=${
           this.state.translation
         }`
     let xhr = this.createRequest('GET', url)
@@ -116,7 +116,6 @@ class AddCard extends React.Component {
             style={{
               color: textColor
             }}
-            id='addMiddlePadding'
             autoFocus
             className='textarea-add'
             value={this.state.english_text}

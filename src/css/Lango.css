@@ -14,31 +14,25 @@
 }
 html,
 body {
-  height: 100%;
+  padding: 0;
+  min-height: 100vh;
+  background: var(--darker-purple);
   position: relative;
 }
 
-@media screen and (max-width: 599px) {
-
-}
-
-@media screen and (min-width: 600px) {
-
-}
-
-@media screen and (min-width: 1000px) {
-
-}
 .App {
-  min-height: 88vh;
+  min-height: 80vh;
   overflow: hidden;
   width: 100%;
   display: flex;
+  background: white;
   flex-direction: column;
-  padding-bottom: 3.2rem; /* height of your footer */
+  clear: both;
+  padding-bottom: 0.5vh;
 }
 
 main {
   position: relative;
-   min-height: 100vh;
+  min-height: 100vh;
+  background: var(--darker-purple);
 }

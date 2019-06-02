@@ -58,9 +58,6 @@ class ReviewCard extends React.Component {
     xhr.send()
   }
 
-  // [ { id: 1,    google_id : ''   english: 'exampl_phrase',   chinese: '예시문구',
-  // seen: 0,   correct: 0 },
-
   loadCards = json => {
     const preload = this.state.cards
     preload.push(...json.data)
@@ -114,10 +111,6 @@ class ReviewCard extends React.Component {
   }
 
   getNextCard = () => {
-    // console.log('inside getNext card ' + this.state.cards.length)
-    // const cards = this.state.cards
-    // const card = this.getRandomCard(cards)
-    // console.log(card)
     this.setState({ currentCard: this.getRandomCard(this.state.cards) })
   }
 

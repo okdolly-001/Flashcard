@@ -5,7 +5,7 @@ const BottomButton = props => (
   <div className='bottom-row'>
     <button
       id='bottom-button'
-      className='btn-primary btn-lg'
+      className='btn-primary'
       onClick={() => {
         props.clickHandler()
       }}

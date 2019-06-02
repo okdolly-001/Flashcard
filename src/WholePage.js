@@ -61,7 +61,7 @@ class WholePage extends Component {
             text={this.state.onCreatePage ? 'Start Review' : 'Add'}
           />
           {this.state.onCreatePage ? (
-            <AddCard google_id={this.state.google_id} />
+            <ReviewCard google_id={this.state.google_id} />
           ) : (
             <ReviewCard google_id={this.state.google_id} />
           )}

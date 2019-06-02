@@ -8,27 +8,40 @@ class ReviewCard extends React.Component {
     super(props)
     this.state = {
       cards: [],
-      currentCard: {}
+      currentCard: {},
+      userInput: '',
+      checkAnswer: false,
+      isCorrect: false
     }
   }
   componentDidMount () {
     this.makeRequest('dump', 'GET', this.loadCards)
   }
-  handleChange = e => {
-    this.setState({ english_text: e.target.value })
-  }
 
-  restart = () => {
-    if (
-      this.state.english_text.length === 0 &&
-      this.state.translation.length === 0
-    ) {
-      this.reset()
+  validate = e => {
+    const eventKey = e.key
+    if (eventKey === 'Enter') {
+      this.setState({ userInput: this.state.userInput.trim() }, () => {
+        console.log('user input ' + this.state.userInput)
+
+        if (this.state.userInput.length > 0 && eventKey === 'Enter') {
+          if (this.state.userInput == this.state.currentCard.english) {
+            console.log('correct!')
+
+            this.setState({ checkAnswer: true, isCorrect: true })
+            this.incrementCorrect(this.state.currentCard.id)
+          } else {
+            console.log('answer is:' + this.state.currentCard.english)
+            console.log('user input:' + this.state.userInput)
+            this.setState({ checkAnswer: true, isCorrect: false })
+          }
+        }
+      })
     }
   }
 
-  startTyping = () => {
-    this.setState({ english_text: '', translation: '', didUserType: true })
+  showUserInput = e => {
+    this.setState({ userInput: e.target.value })
   }
 
   createRequest = (method, url) => {
@@ -69,16 +82,12 @@ class ReviewCard extends React.Component {
     }
   }
 
-  hideError = () => {
-    this.setState({ showError: false })
-  }
-
   getRandomCard = preload => {
     let randomIndex = Math.floor(Math.random() * preload.length)
     let card = preload[randomIndex]
     if (Object.keys(this.state.currentCard).length === 0) {
       console.log(this.state.currentCard)
-      this.incrementSeen(card)
+      this.incrementSeen(card.id)
       return card
     }
     if (card.id === this.state.currentCard.id) {
@@ -95,23 +104,34 @@ class ReviewCard extends React.Component {
     console.log('threshhold id ' + threshold + ' score is: ' + score)
     if (Number(card.seen) === 0 || threshold <= score) {
       console.log(card)
-      this.incrementSeen(card)
+      this.incrementSeen(card.id)
       return card
     } else {
       return this.getRandomCard(preload)
     }
   }
 
-  incrementSeen = card => {
-    this.makeRequest(`seen/${card.id}`, 'POST', null)
+  incrementSeen = id => {
+    this.makeRequest(`seen/${id}`, 'POST', null)
   }
 
-  incrementCorrect = card => {
-    this.makeRequest(`correct/${card.id}`, 'POST', null)
+  incrementCorrect = id => {
+    this.makeRequest(`correct/${id}`, 'POST', null)
   }
 
   getNextCard = () => {
-    this.setState({ currentCard: this.getRandomCard(this.state.cards) })
+    this.setState({
+      currentCard: this.getRandomCard(this.state.cards),
+      userInput: '',
+      checkAnswer: false,
+      isCorrect: false
+    })
+  }
+  flipHandler = () => {
+    this.setState({
+      checkAnswer: false,
+      isCorrect: false
+    })
   }
 
   render () {
@@ -123,12 +143,22 @@ class ReviewCard extends React.Component {
     }
     return (
       <div className='App'>
-        <Card
-          key={this.state.currentCard}
-          question={this.state.currentCard.chinese}
-          answer={this.state.currentCard.english}
-          correctHandler={this.incrementCorrect}
-        />
+        <div className='card'>
+          <Card
+            key={this.state.currentCard}
+            question={this.state.currentCard.chinese}
+            checkAnswer={this.state.checkAnswer}
+            answer={this.state.currentCard.english}
+            isCorrect={this.state.isCorrect}
+            flipHandler={this.flipHandler.bind(this)}
+          />
+          <textarea
+            className='textarea-card'
+            onChange={this.showUserInput}
+            value={this.state.userInput}
+            onKeyDown={this.validate}
+          />
+        </div>
         <BottomButton clickHandler={this.getNextCard.bind(this)} text='Next' />
         <div className='create-card__error'>{errorMessage}</div>
       </div>

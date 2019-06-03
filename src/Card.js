@@ -1,5 +1,6 @@
 import React from 'react'
 import './css/Card.css'
+import FlipSvg from './FlipSvg'
 
 class Card extends React.Component {
   constructor (props) {
@@ -30,6 +31,7 @@ class Card extends React.Component {
           (checkAnswer ? ' check-answer' : '')
         }
       >
+
         {checkAnswer ? (
           result
         ) : (

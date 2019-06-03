@@ -9,37 +9,46 @@ class WholePage extends Component {
   constructor (props) {
     super(props)
     this.state = {
-      onCreatePage: true,
+      onCreatePage: false,
       username: 'Username',
-      google_id: ''
+      noCard: true
     }
   }
   componentDidMount () {
-    this.makeRequest()
+    this.makeRequest('dump', 'GET', this.loadCards)
+    this.makeRequest('get_user', 'GET', this.setUsername)
   }
+  loadCards = json => {
+    if (json.data.length != 0) {
+      this.setState({ noCard: false })
+    }
+  }
+
   switchPage = () => {
     this.setState(prevState => ({
       onCreatePage: !prevState.onCreatePage
     }))
   }
+
   createRequest = (method, url) => {
     let xhr = new XMLHttpRequest()
     xhr.open(method, url, true)
     return xhr
   }
 
-  makeRequest = () => {
-    let url = `get_user`
-    let xhr = this.createRequest('GET', url)
-    let callbackFunction = this.setUsername
+  makeRequest = (url, action, callbackFunction) => {
+    let xhr = this.createRequest(action, url)
     if (!xhr) {
       alert('CORS not supported')
       return
     }
     xhr.onload = function () {
       let responseStr = xhr.responseText
-      let object = JSON.parse(responseStr)
-      callbackFunction(object)
+      if (responseStr && callbackFunction) {
+        console.log(responseStr)
+        let object = JSON.parse(responseStr)
+        callbackFunction(object)
+      }
     }
     xhr.onerror = function () {
       alert('Woops, there was an error making the request.')
@@ -48,21 +57,26 @@ class WholePage extends Component {
   }
 
   setUsername = json => {
-    this.setState({ username: json.name, google_id: json.google_id })
+    this.setState({ username: json.name })
   }
 
   render () {
+    console.log('noCard ', this.state.noCard, this.state.onCreatePage)
     return (
       <main>
         <div className='App'>
           <Header
             clickHandler={this.switchPage.bind(this)}
-            text={this.state.onCreatePage ? 'Start Review' : 'Add'}
+            text={
+              this.state.noCard || this.state.onCreatePage
+                ? 'Start Review'
+                : 'Add'
+            }
           />
-          {this.state.onCreatePage ? (
-            <AddCard google_id={this.state.google_id} />
+          {this.state.noCard || this.state.onCreatePage ? (
+            <AddCard />
           ) : (
-            <ReviewCard google_id={this.state.google_id} />
+            <ReviewCard />
           )}
         </div>
         <footer>

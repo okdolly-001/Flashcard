@@ -34,23 +34,31 @@
   padding: 0.5em;
 }
 
-p.correct {
-  margin: auto;
-  color: green;
-  font-size: 40px;
-  font-weight: bold;
-}
-
 .check-answer {
   display: flex;
   border: 2px solid grey;
   justify-content: center;
   align-items: center;
 }
+.correct-card {
+  width: 60%;
+  height: 60%;
+  background-color: greenyellow;
+  border: 3px solid green;
+  text-align: center;
+  display: flex;
+  align-items: center;
+}
 
+p.correct {
+  margin: auto;
+  color: green;
+  font-size: 0.9em;
+  font-weight: bold;
+}
 .wrong-card {
-  width: 40%;
-  height: 4em;
+  width: 60%;
+  height: 60%;
   background-color: pink;
   border: 3px solid paleturquoise;
   text-align: center;
@@ -60,49 +68,11 @@ p.correct {
 
 p.wrong {
   margin: auto;
-  font-size: 40px;
+  font-size: 0.9em;
   color: #ff00bf;
   font-weight: bold;
 }
 
-/**iPhone 5 */
-@media screen and (max-device-width: 320px) {
-  .card-container {
-    height: 5em;
-    margin-top: 10%;
-    margin-bottom: 3%;
-  }
-  .textarea-card {
-    font-size: 15px;
-    height: 7em;
-    padding: 1em;
-  }
-}
-
-/**iPhone 6/7/8 */
-@media screen and (device-width: 375px) and (device-height: 667px) {
-  .textarea-card {
-    border: 2px solid grey;
-    margin-top: 3%;
-    width: 75%;
-    font-size: 15px;
-    height: 10em;
-    padding: 1em;
-  }
-  .card-container {
-    font-size: 30px;
-    height: 7em;
-    margin-top: 10%;
-    margin-bottom: 3%;
-  }
-}
-
-.card-container.flipped .front {
-  transform: rotateY(180deg);
-}
-.card-container.flipped .back {
-  transform: rotateY(0deg);
-}
 .card-container .front,
 .card-container .back {
   box-sizing: border-box;
@@ -139,19 +109,71 @@ p.wrong {
   top: 0px;
   right: 0px;
 }
-.correct-card {
-  width: 40%;
-  height: 4em;
-  background-color: greenyellow;
-  border: 3px solid green;
-  text-align: center;
-  display: flex;
-  align-items: center;
+
+.card-container.flipped .front {
+  transform: rotateY(180deg);
+}
+.card-container.flipped .back {
+  transform: rotateY(0deg);
+}
+
+/**iPhone 5 */
+@media screen and (max-device-width: 320px) {
+  .card-container {
+    height: 5em;
+    margin-top: 10%;
+    margin-bottom: 3%;
+  }
+  .textarea-card {
+    margin-top: 5%;
+    font-size: 15px;
+    height: 7em;
+    padding: 1em;
+  }
+  p.correct {
+    font-size: 0.6em;
+  }
+
+  p.wrong {
+    font-size: 0.6em;
+  }
+}
+
+/**iPhone 6/7/8 */
+@media screen and (device-width: 375px) and (device-height: 667px) {
+  .textarea-card {
+    border: 2px solid grey;
+    margin-top: 3%;
+    width: 75%;
+    font-size: 15px;
+    height: 10em;
+    padding: 1em;
+  }
+  .card-container {
+    font-size: 30px;
+    height: 7em;
+    margin-top: 10%;
+    margin-bottom: 3%;
+  }
 }
 
 
-@media screen and (min-width: 450px) {
+/**Computer */
+@media screen and (min-width: 1000px) {
+  .card-container {
+    width: 50%;
+  }
   .textarea-card {
-    margin-top: 5%;
+    width: 50%;
+  }
+}
+
+/**iPad*/
+@media screen and (min-device-width: 768px) and (min-device-height: 1024px) {
+  .card-container {
+    margin-top: 15%;
+  }
+  .textarea-card {
+    margin-top: 4%;
   }
 }

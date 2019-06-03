@@ -100,7 +100,6 @@ function getUserHandler (req, res) {
 }
 
 function incrementSeenHandler (req, res) {
-  console.log('inside incrementSeen')
   if (req.user) {
     getDb().run(
       'UPDATE flashcards SET seen = seen + 1 WHERE id = ?',
@@ -120,7 +119,6 @@ function incrementSeenHandler (req, res) {
 }
 
 function incrementCorrectHandler (req, res) {
-  console.log('INCREMENT Correct ', req.params.id)
 
   if (req.user) {
     getDb().run(
@@ -129,7 +127,6 @@ function incrementCorrectHandler (req, res) {
       dataCallback
     )
     function dataCallback (err) {
-      console.log('increment correct')
       if (err) {
         console.log(err.message)
       }

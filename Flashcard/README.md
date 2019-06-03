@@ -12,12 +12,13 @@
 
 Credit:
 
-1. A minimal setup with [React](https://facebook.github.io/react/),[Babel](http://babeljs.io/), and [Webpack](http://webpack.github.io/) from
-   https://github.com/ahfarmer/minimal-react-starter
+1.https://github.com/ahfarmer/minimal-react-starter
 
 
-### Cool React Patterns
-#### [Destructuring React props for the cleaner code](https://dev.to/arnas/destructuring-react-props-for-the-cleaner-code-293)
+
+## Cool React Patterns
+
+### [Destructuring React props for the cleaner code](https://dev.to/arnas/destructuring-react-props-for-the-cleaner-code-293)
 
 - Class Component
 
@@ -72,7 +73,7 @@ const Row = ({ firstName, lastName, email, doSomethingAmazing }) => (
 );
 ```
 
-#### [React setState usage and gotchas](https://itnext.io/react-setstate-usage-and-gotchas-ac10b4e03d60)
+### [React setState usage and gotchas](https://itnext.io/react-setstate-usage-and-gotchas-ac10b4e03d60)
 
 - Basic pattern
 
@@ -105,3 +106,4 @@ this.setState(
   this.displayResult
 )
 ```
+

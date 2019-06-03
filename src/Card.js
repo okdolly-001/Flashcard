@@ -21,14 +21,12 @@ class Card extends React.Component {
   render () {
     const result = this.props.isCorrect ? <CorrectCard /> : <WrongtCard />
     const { checkAnswer } = this.props
-    console.log('inside card prop', checkAnswer)
-    const { frontContent, backContent, flipped } = this.state
     return (
       <div
         onClick={this.flip}
         className={
           'card-container' +
-          (flipped ? ' flipped' : '') +
+          (this.state.flipped ? ' flipped' : '') +
           (checkAnswer ? ' check-answer' : '')
         }
       >
@@ -36,8 +34,8 @@ class Card extends React.Component {
           result
         ) : (
           <div>
-            <Front text={frontContent} />
-            <Back text={backContent} />
+            <Front text={this.state.frontContent} />
+            <Back text={this.state.backContent} />
           </div>
         )}
       </div>

@@ -7,6 +7,8 @@ const GoogleStrategy = require('passport-google-oauth20')
 const session = require('express-session')
 const getDb = require('./routes/db').getDb
 const initDb = require('./routes/db').initDb
+const cookieParser = require('cookie-parser')
+const bodyParser = require('body-parser')
 
 const api = require('./routes/api')
 const login = require('./routes/login')
@@ -25,6 +27,9 @@ const app = express()
 
 app.use('/css', express.static('src/css'))
 
+app.use(cookieParser())
+app.use(bodyParser())
+
 app.use(session({ secret: 'anything', resave: true, saveUninitialized: true }))
 
 app.use(passport.initialize())
@@ -40,9 +45,9 @@ app.use(
     stats: 'errors-only',
     noInfo: true,
     historyApiFallback: false
-  })
+  }),
+  login.printURL
 )
-app.use('/', login.printURL)
 app.get('/auth/google', passport.authenticate('google', { scope: ['profile'] }))
 
 app.get('/logout', function (req, res) {
@@ -74,8 +79,8 @@ process.on('exit', function () {
 
 app.get('/translate', api.translationHandler)
 app.get('/store', api.createCardHandler)
-app.get('/seen/:id/', api.incrementSeenHandler)
-app.get('/correct/:id/', api.incrementCorrectHandler)
+app.get('/seen/:id', api.incrementSeenHandler)
+app.get('/correct/:id', api.incrementCorrectHandler)
 app.get('/dump', api.dumpHandler)
 app.get('/get_user', api.getUserHandler)
 app.use(api.fileNotFound)

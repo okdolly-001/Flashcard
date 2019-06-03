@@ -60,13 +60,14 @@ function createCardHandler (req, res, next) {
         [req.user.google_id, req.query.english, req.query.chinese, 0, 0],
         err => {
           if (err) {
-            return console.log(err)
+            console.log(err)
+          } else {
+            res.json({
+              message: 'store successfully',
+              english: req.query.english,
+              chinese: req.query.chinese
+            })
           }
-          res.json({
-            message: 'store successfully',
-            english: req.query.english,
-            chinese: req.query.chinese
-          })
         }
       )
     }
@@ -75,11 +76,8 @@ function createCardHandler (req, res, next) {
   }
 }
 
-function dumpHandler(req, res) {
-
+function dumpHandler (req, res, next) {
   if (req.user) {
-    console.log('dump url is ', req.url)
-
     getDb().all(
       'SELECT * FROM flashcards WHERE google_id = ?',
       [req.user.google_id],
@@ -87,7 +85,6 @@ function dumpHandler(req, res) {
     )
     function dataCallback (err, data) {
       res.json({ data: data })
-      return next()
     }
   } else {
     res.redirect('/login')
@@ -105,29 +102,24 @@ function getUserHandler (req, res) {
 function incrementSeenHandler (req, res) {
   console.log('inside incrementSeen')
   if (req.user) {
-    console.log('increment ', req.params.id)
     getDb().run(
       'UPDATE flashcards SET seen = seen + 1 WHERE id = ?',
       [req.params.id],
       dataCallback
     )
-
     function dataCallback (err) {
       if (err) {
-        return console.log(err.message)
-      } else {
-        res.json({
-          message: 'increment successfully',
-          id: req.params.id
-        })
+        console.log(err.message)
       }
     }
   } else {
-    return res.redirect('/login')
+    res.redirect('/login')
   }
 }
 
 function incrementCorrectHandler (req, res) {
+  console.log('INCREMENT Correct ', req.params.id)
+
   if (req.user) {
     getDb().run(
       'UPDATE flashcards SET correct = correct + 1 WHERE id = ?',
@@ -135,12 +127,13 @@ function incrementCorrectHandler (req, res) {
       dataCallback
     )
     function dataCallback (err) {
+      console.log('increment correct')
       if (err) {
-        return console.log(err.message)
+        console.log(err.message)
       }
     }
   } else {
-    return res.redirect('/login')
+    res.redirect('/login')
   }
 }
 

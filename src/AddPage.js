@@ -51,7 +51,7 @@ class AddCard extends React.Component {
     let url =
       requestType === 'GET'
         ? `translate?english=${this.state.english_text}`
-        : `store?english=${this.state.english_text}&korean=${
+        : `store?english=${this.state.english_text}&chinese=${
           this.state.translation
         }`
     let xhr = this.createRequest('GET', url)
@@ -64,6 +64,7 @@ class AddCard extends React.Component {
 
     xhr.onload = function () {
       let responseStr = xhr.responseText
+      console.log(responseStr)
       let object = JSON.parse(responseStr)
       callbackFunction(object)
     }
@@ -111,7 +112,6 @@ class AddCard extends React.Component {
     return (
       <div className='App'>
         <div className='cards-in-row'>
-          <div className='cardBox'>
           <textarea
             style={{
               color: textColor
@@ -124,8 +124,6 @@ class AddCard extends React.Component {
             onKeyDown={this.translate}
             onMouseLeave={this.restart}
           />
-          </div>
-          <div className='cardBox'>
           <textarea
             style={{
               color: textColor
@@ -134,7 +132,6 @@ class AddCard extends React.Component {
             value={this.state.translation}
             onChange={this.showTranslation}
           />
-          </div>
         </div>
         <BottomButton
           clickHandler={this.storeTranslation.bind(this)}

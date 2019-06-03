@@ -18,6 +18,24 @@ class ReviewCard extends React.Component {
     this.makeRequest('dump', 'GET', this.loadCards)
   }
 
+  loadCards = json => {
+    const preload = this.state.cards
+    preload.push(...json.data)
+    console.log('cards ', preload)
+    if (preload.length != 0) {
+      this.setState(prevState => {
+        return {
+          cards: preload,
+          currentCard: this.getRandomCard(preload),
+          userInput: '',
+          checkAnswer: false,
+          isCorrect: false,
+          keyID: prevState.keyID + 1
+        }
+      }, ()=>{console.log(this.state.currentCard)})
+    }
+  }
+
   validate = e => {
     const eventKey = e.key
     if (eventKey === 'Enter') {
@@ -48,57 +66,51 @@ class ReviewCard extends React.Component {
   }
 
   makeRequest = (url, action, callbackFunction) => {
-    console.log('URL is ', url)
-
     let xhr = this.createRequest(action, url)
     if (!xhr) {
       alert('CORS not supported')
       return
     }
-
     xhr.onload = function () {
       let responseStr = xhr.responseText
       if (responseStr && callbackFunction) {
+        console.log(responseStr)
         let object = JSON.parse(responseStr)
         callbackFunction(object)
       }
     }
-
     xhr.onerror = function () {
       alert('Woops, there was an error making the request.')
     }
     xhr.send()
   }
 
-  loadCards = json => {
-    const preload = this.state.cards
-    preload.push(...json.data)
-    if (preload.length != 0) {
-      this.setState({
-        cards: preload,
-        currentCard: this.getRandomCard(preload)
-      })
-    }
-  }
-
   getRandomCard = preload => {
     let randomIndex = Math.floor(Math.random() * preload.length)
     let card = preload[randomIndex]
+    console.log('currentCard', this.state.currentCard)
     if (Object.keys(this.state.currentCard).length === 0) {
-      console.log(this.state.currentCard)
       this.incrementSeen(card)
+      console.log(
+        card.english,
+        'id ',
+        card.id,
+        'seen ',
+        card.seen,
+        'correct ',
+        card.correct
+      )
+
       return card
     }
     if (card.id === this.state.currentCard.id) {
       return this.getRandomCard(preload)
     }
-    console.log('correct and seen ' + card.correct / 2 + ' ' + card.seen)
 
     let score =
       Math.max(1, 5 - Number(card.correct)) +
       Math.max(1, 5 - Number(card.seen)) +
       (6 * (Number(card.seen) - Number(card.correct))) / (Number(card.seen) + 1)
-
     let threshold = Math.floor(Math.random() * 16)
     console.log('threshhold id ' + threshold + ' score is: ' + score)
     if (Number(card.seen) === 0 || threshold <= score) {
@@ -119,22 +131,16 @@ class ReviewCard extends React.Component {
   }
 
   incrementSeen = card => {
-    console.log('trying to increment seen id is', card.id, 'seen ', card.seen)
-    this.makeRequest(`seen/${card.id}/`, 'POST', null)
+    this.makeRequest(`seen/${card.id}`, 'GET', null)
   }
 
   incrementCorrect = card => {
-    this.makeRequest(`correct/${card.id}/`, 'POST', null)
+    this.makeRequest(`correct/${card.id}`, 'GET', null)
   }
 
   getNextCard = () => {
-    this.setState(prevState => ({
-      currentCard: this.getRandomCard(this.state.cards),
-      userInput: '',
-      checkAnswer: false,
-      isCorrect: false,
-      keyID: prevState.keyID + 1
-    }))
+    console.log('next pressed');
+    this.makeRequest('dump', 'GET', this.loadCards)
   }
 
   flipHandler = () => {

@@ -111,6 +111,8 @@ function incrementSeenHandler (req, res) {
       if (err) {
         console.log(err.message)
       }
+      return res.sendStatus(200)
+
     }
   } else {
     res.redirect('/login')
@@ -131,6 +133,7 @@ function incrementCorrectHandler (req, res) {
       if (err) {
         console.log(err.message)
       }
+       return res.sendStatus(200)
     }
   } else {
     res.redirect('/login')

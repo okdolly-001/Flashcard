@@ -34,6 +34,37 @@
   padding: 0.5em;
 }
 
+p.correct {
+  margin: auto;
+  color: green;
+  font-size: 40px;
+  font-weight: bold;
+}
+
+.check-answer {
+  display: flex;
+  border: 2px solid grey;
+  justify-content: center;
+  align-items: center;
+}
+
+.wrong-card {
+  width: 40%;
+  height: 4em;
+  background-color: pink;
+  border: 3px solid paleturquoise;
+  text-align: center;
+  display: flex;
+  align-items: center;
+}
+
+p.wrong {
+  margin: auto;
+  font-size: 40px;
+  color: #ff00bf;
+  font-weight: bold;
+}
+
 /**iPhone 5 */
 @media screen and (max-device-width: 320px) {
   .card-container {
@@ -109,7 +140,6 @@
   right: 0px;
 }
 .correct-card {
-  position: absolute;
   width: 40%;
   height: 4em;
   background-color: greenyellow;
@@ -119,36 +149,9 @@
   align-items: center;
 }
 
-p.correct {
-  margin: auto;
-  color: green;
-  font-size: 40px;
-  font-weight: bold;
-}
- 
 
 @media screen and (min-width: 450px) {
   .textarea-card {
     margin-top: 5%;
   }
-
-}
-
-.wrong-card {
-  
-  position: absolute;
-  width: 40%;
-  height: 4em;
-  background-color: pink;
-  border: 3px solid paleturquoise;
-  text-align: center;
-  display: flex;
-  align-items: center;
-}
-
-p.wrong {
-  margin: auto;
-  font-size: 40px;
-  color: #ff00bf;
-  font-weight: bold;
 }

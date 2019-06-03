@@ -5,7 +5,9 @@ class Card extends React.Component {
   constructor (props) {
     super(props)
     this.state = {
-      flipped: false
+      flipped: false,
+      frontContent: this.props.question,
+      backContent: this.props.answer
     }
   }
 
@@ -17,22 +19,25 @@ class Card extends React.Component {
   }
 
   render () {
-    if (this.props.checkAnswer) {
-    }
-
     const result = this.props.isCorrect ? <CorrectCard /> : <WrongtCard />
-    console.log('inside card prop', this.props.checkAnswer)
+    const { checkAnswer } = this.props
+    console.log('inside card prop', checkAnswer)
+    const { frontContent, backContent, flipped } = this.state
     return (
       <div
         onClick={this.flip}
-        className={'card-container' + (this.state.flipped ? ' flipped' : '')}
+        className={
+          'card-container' +
+          (flipped ? ' flipped' : '') +
+          (checkAnswer ? ' check-answer' : '')
+        }
       >
-        {this.props.checkAnswer ? (
+        {checkAnswer ? (
           result
         ) : (
           <div>
-            <Front text={this.props.question} />
-            <Back text={this.props.answer} />
+            <Front text={frontContent} />
+            <Back text={backContent} />
           </div>
         )}
       </div>

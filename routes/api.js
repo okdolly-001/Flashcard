@@ -4,11 +4,8 @@ const url =
   'https://translation.googleapis.com/language/translate/v2?key=' + APIkey
 const getDb = require('./db').getDb
 
-const db = getDb()
-
 function translationHandler (req, res, next) {
   let qObj = req.query
-  console.log(req.query)
   if (qObj != undefined) {
     reqTranslation(qObj.english, res)
   } else {
@@ -38,8 +35,6 @@ function reqTranslation (item, res) {
           english: requestObject.q[0],
           translated: APIresBody.data.translations[0].translatedText
         })
-        console.log('\n\nJSON was:')
-        console.log(JSON.stringify(APIresBody, undefined, 2))
       }
     }
   } // end callback function
@@ -60,7 +55,6 @@ function reqTranslation (item, res) {
 function createCardHandler (req, res, next) {
   if (req.user) {
     if (req.query != undefined) {
-      console.log('create card ' + req.user.google_id)
       getDb().run(
         `INSERT INTO flashcards (google_id, english, chinese, seen, correct)VALUES(?,?,?,?,?)`,
         [req.user.google_id, req.query.english, req.query.chinese, 0, 0],
@@ -68,7 +62,11 @@ function createCardHandler (req, res, next) {
           if (err) {
             return console.log(err)
           }
-          console.log('Row was added to the table: ${this.lastID}')
+          res.json({
+            message: 'store successfully',
+            english: req.query.english,
+            chinese: req.query.chinese
+          })
         }
       )
     }
@@ -77,8 +75,11 @@ function createCardHandler (req, res, next) {
   }
 }
 
-function dumpHandler (req, res) {
+function dumpHandler(req, res) {
+
   if (req.user) {
+    console.log('dump url is ', req.url)
+
     getDb().all(
       'SELECT * FROM flashcards WHERE google_id = ?',
       [req.user.google_id],
@@ -86,11 +87,13 @@ function dumpHandler (req, res) {
     )
     function dataCallback (err, data) {
       res.json({ data: data })
+      return next()
     }
   } else {
     res.redirect('/login')
   }
 }
+
 function getUserHandler (req, res) {
   if (req.user) {
     res.json({ name: req.user.first_name, google_id: req.user.google_id })
@@ -100,16 +103,23 @@ function getUserHandler (req, res) {
 }
 
 function incrementSeenHandler (req, res) {
+  console.log('inside incrementSeen')
   if (req.user) {
+    console.log('increment ', req.params.id)
     getDb().run(
       'UPDATE flashcards SET seen = seen + 1 WHERE id = ?',
       [req.params.id],
       dataCallback
     )
+
     function dataCallback (err) {
-      console.log('increment seen')
       if (err) {
         return console.log(err.message)
+      } else {
+        res.json({
+          message: 'increment successfully',
+          id: req.params.id
+        })
       }
     }
   } else {
@@ -125,7 +135,6 @@ function incrementCorrectHandler (req, res) {
       dataCallback
     )
     function dataCallback (err) {
-      console.log('increment correct')
       if (err) {
         return console.log(err.message)
       }

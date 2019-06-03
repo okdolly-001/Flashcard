@@ -7,6 +7,13 @@ module.exports = {
     path: path.join(__dirname, 'public'),
     filename: 'bundle.js'
   },
+  devServer: {
+    stats: {
+      modules: false,
+      chunks: false,
+      warnings: false
+    }
+  },
   module: {
     rules: [
       {
@@ -24,5 +31,6 @@ module.exports = {
         use: ['style-loader', 'css-loader']
       }
     ]
-  }
+  },
+  stats: 'errors-only'
 }

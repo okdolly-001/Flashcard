@@ -38,7 +38,6 @@ class WholePage extends Component {
     }
     xhr.onload = function () {
       let responseStr = xhr.responseText
-      console.log(responseStr)
       let object = JSON.parse(responseStr)
       callbackFunction(object)
     }

@@ -1,6 +1,5 @@
 import React from 'react'
 import './css/Lango.css'
-import './css/ReviewPage.css'
 import BottomButton from './BottomButton.js'
 import Card from './Card.js'
 class ReviewCard extends React.Component {
@@ -11,7 +10,8 @@ class ReviewCard extends React.Component {
       currentCard: {},
       userInput: '',
       checkAnswer: false,
-      isCorrect: false
+      isCorrect: false,
+      keyID: 0
     }
   }
   componentDidMount () {
@@ -21,22 +21,19 @@ class ReviewCard extends React.Component {
   validate = e => {
     const eventKey = e.key
     if (eventKey === 'Enter') {
-      this.setState({ userInput: this.state.userInput.trim() }, () => {
-        console.log('user input ' + this.state.userInput)
-
-        if (this.state.userInput.length > 0 && eventKey === 'Enter') {
-          if (this.state.userInput == this.state.currentCard.english) {
-            console.log('correct!')
-
-            this.setState({ checkAnswer: true, isCorrect: true })
-            this.incrementCorrect(this.state.currentCard.id)
-          } else {
-            console.log('answer is:' + this.state.currentCard.english)
-            console.log('user input:' + this.state.userInput)
-            this.setState({ checkAnswer: true, isCorrect: false })
+      this.setState(
+        prevState => ({ userInput: prevState.userInput.trim() }),
+        () => {
+          if (this.state.userInput.length > 0 && eventKey === 'Enter') {
+            if (this.state.userInput == this.state.currentCard.english) {
+              this.setState({ checkAnswer: true, isCorrect: true })
+              this.incrementCorrect(this.state.currentCard)
+            } else {
+              this.setState({ checkAnswer: true, isCorrect: false })
+            }
           }
         }
-      })
+      )
     }
   }
 
@@ -51,20 +48,22 @@ class ReviewCard extends React.Component {
   }
 
   makeRequest = (url, action, callbackFunction) => {
+    console.log('URL is ', url)
+
     let xhr = this.createRequest(action, url)
     if (!xhr) {
       alert('CORS not supported')
       return
     }
-    if (action === 'GET') {
-      xhr.onload = function () {
-        let responseStr = xhr.responseText
+
+    xhr.onload = function () {
+      let responseStr = xhr.responseText
+      if (responseStr && callbackFunction) {
         let object = JSON.parse(responseStr)
-        if (callbackFunction) {
-          callbackFunction(object)
-        }
+        callbackFunction(object)
       }
     }
+
     xhr.onerror = function () {
       alert('Woops, there was an error making the request.')
     }
@@ -87,7 +86,7 @@ class ReviewCard extends React.Component {
     let card = preload[randomIndex]
     if (Object.keys(this.state.currentCard).length === 0) {
       console.log(this.state.currentCard)
-      this.incrementSeen(card.id)
+      this.incrementSeen(card)
       return card
     }
     if (card.id === this.state.currentCard.id) {
@@ -100,33 +99,44 @@ class ReviewCard extends React.Component {
       Math.max(1, 5 - Number(card.seen)) +
       (6 * (Number(card.seen) - Number(card.correct))) / (Number(card.seen) + 1)
 
-    let threshold = Math.floor(Math.random() * 15)
+    let threshold = Math.floor(Math.random() * 16)
     console.log('threshhold id ' + threshold + ' score is: ' + score)
     if (Number(card.seen) === 0 || threshold <= score) {
-      console.log(card)
-      this.incrementSeen(card.id)
+      console.log(
+        card.english,
+        'id ',
+        card.id,
+        'seen ',
+        card.seen,
+        'correct ',
+        card.correct
+      )
+      this.incrementSeen(card)
       return card
     } else {
       return this.getRandomCard(preload)
     }
   }
 
-  incrementSeen = id => {
-    this.makeRequest(`seen/${id}`, 'POST', null)
+  incrementSeen = card => {
+    console.log('trying to increment seen id is', card.id, 'seen ', card.seen)
+    this.makeRequest(`seen/${card.id}/`, 'POST', null)
   }
 
-  incrementCorrect = id => {
-    this.makeRequest(`correct/${id}`, 'POST', null)
+  incrementCorrect = card => {
+    this.makeRequest(`correct/${card.id}/`, 'POST', null)
   }
 
   getNextCard = () => {
-    this.setState({
+    this.setState(prevState => ({
       currentCard: this.getRandomCard(this.state.cards),
       userInput: '',
       checkAnswer: false,
-      isCorrect: false
-    })
+      isCorrect: false,
+      keyID: prevState.keyID + 1
+    }))
   }
+
   flipHandler = () => {
     this.setState({
       checkAnswer: false,
@@ -145,10 +155,10 @@ class ReviewCard extends React.Component {
       <div className='App'>
         <div className='card'>
           <Card
-            key={this.state.currentCard}
+            key={this.state.keyID}
             question={this.state.currentCard.chinese}
-            checkAnswer={this.state.checkAnswer}
             answer={this.state.currentCard.english}
+            checkAnswer={this.state.checkAnswer}
             isCorrect={this.state.isCorrect}
             flipHandler={this.flipHandler.bind(this)}
           />

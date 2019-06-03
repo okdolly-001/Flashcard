@@ -2,12 +2,9 @@ const getDb = require('./db').getDb
 
 function isAuthenticated (req, res, next) {
   if (req.user) {
-    console.log('Req.session:', req.session)
-    console.log('Req.user:', req.user)
     next()
     return
   } else if (req.originalUrl === '/') {
-    console.log('not logged in ?')
     res.redirect('/login')
     return
   }
@@ -45,6 +42,7 @@ function gotProfile (accessToken, refreshToken, profile, done) {
     }
   )
 }
+
 function loginSuccess (req, res) {
   console.log('Logged in and using cookies!')
   res.redirect('/')
@@ -59,7 +57,6 @@ function deserializeUser (dbRowID, done) {
       if (err) {
         console.log(err)
       } else {
-        console.log('user row')
         if (row) {
           let userData = {
             google_id: row.id,
@@ -77,7 +74,7 @@ function deserializeUser (dbRowID, done) {
 }
 
 function printURL (req, res, next) {
-  console.log(req.url)
+  console.log(req.originalUrl)
   next()
 }
 

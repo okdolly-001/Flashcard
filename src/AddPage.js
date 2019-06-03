@@ -19,13 +19,11 @@ class AddCard extends React.Component {
   }
 
   reset = () => {
-    setTimeout(() => {
       this.setState({
         english_text: 'English',
         translation: 'Translation',
         didUserType: false
       })
-    }, 500)
   }
 
   restart = () => {

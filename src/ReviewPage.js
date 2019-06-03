@@ -9,9 +9,9 @@ class ReviewCard extends React.Component {
       cards: [],
       currentCard: {},
       userInput: '',
-      checkAnswer: false,
       isCorrect: false,
-      keyID: 0
+      keyID: 0,
+      flipped: false
     }
   }
   componentDidMount () {
@@ -23,16 +23,21 @@ class ReviewCard extends React.Component {
     preload.push(...json.data)
     console.log('cards ', preload)
     if (preload.length != 0) {
-      this.setState(prevState => {
-        return {
-          cards: preload,
-          currentCard: this.getRandomCard(preload),
-          userInput: '',
-          checkAnswer: false,
-          isCorrect: false,
-          keyID: prevState.keyID + 1
+      this.setState(
+        prevState => {
+          return {
+            cards: preload,
+            currentCard: this.getRandomCard(preload),
+            userInput: '',
+            isCorrect: false,
+            keyID: prevState.keyID + 1,
+            flipped: false
+          }
+        },
+        () => {
+          console.log(this.state.currentCard)
         }
-      }, ()=>{console.log(this.state.currentCard)})
+      )
     }
   }
 
@@ -42,12 +47,12 @@ class ReviewCard extends React.Component {
       this.setState(
         prevState => ({ userInput: prevState.userInput.trim() }),
         () => {
-          if (this.state.userInput.length > 0 && eventKey === 'Enter') {
+          if (eventKey === 'Enter') {
             if (this.state.userInput == this.state.currentCard.english) {
-              this.setState({ checkAnswer: true, isCorrect: true })
+              this.setState({ isCorrect: true })
               this.incrementCorrect(this.state.currentCard)
             } else {
-              this.setState({ checkAnswer: true, isCorrect: false })
+              this.flipHandler()
             }
           }
         }
@@ -87,20 +92,11 @@ class ReviewCard extends React.Component {
 
   getRandomCard = preload => {
     let randomIndex = Math.floor(Math.random() * preload.length)
+    console.log('randomIndex', randomIndex)
     let card = preload[randomIndex]
     console.log('currentCard', this.state.currentCard)
     if (Object.keys(this.state.currentCard).length === 0) {
       this.incrementSeen(card)
-      console.log(
-        card.english,
-        'id ',
-        card.id,
-        'seen ',
-        card.seen,
-        'correct ',
-        card.correct
-      )
-
       return card
     }
     if (card.id === this.state.currentCard.id) {
@@ -114,15 +110,6 @@ class ReviewCard extends React.Component {
     let threshold = Math.floor(Math.random() * 16)
     console.log('threshhold id ' + threshold + ' score is: ' + score)
     if (Number(card.seen) === 0 || threshold <= score) {
-      console.log(
-        card.english,
-        'id ',
-        card.id,
-        'seen ',
-        card.seen,
-        'correct ',
-        card.correct
-      )
       this.incrementSeen(card)
       return card
     } else {
@@ -139,15 +126,20 @@ class ReviewCard extends React.Component {
   }
 
   getNextCard = () => {
-    console.log('next pressed');
-    this.makeRequest('dump', 'GET', this.loadCards)
+    console.log('next pressed')
+    if (this.state.cards.length < 2) {
+      alert('Please add more cards')
+      this.props.clickHandler()
+    } else {
+      this.makeRequest('dump', 'GET', this.loadCards)
+    }
   }
 
   flipHandler = () => {
-    this.setState({
-      checkAnswer: false,
+    this.setState(prevState => ({
+      flipped: !prevState.flipped,
       isCorrect: false
-    })
+    }))
   }
 
   render () {
@@ -164,9 +156,9 @@ class ReviewCard extends React.Component {
             key={this.state.keyID}
             question={this.state.currentCard.chinese}
             answer={this.state.currentCard.english}
-            checkAnswer={this.state.checkAnswer}
             isCorrect={this.state.isCorrect}
             flipHandler={this.flipHandler.bind(this)}
+            flipped={this.state.flipped}
           />
           <textarea
             className='textarea-card'

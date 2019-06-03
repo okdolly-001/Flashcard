@@ -25,6 +25,7 @@ class WholePage extends Component {
   }
 
   switchPage = () => {
+    this.makeRequest('dump', 'GET', this.loadCards)
     this.setState(prevState => ({
       onCreatePage: !prevState.onCreatePage
     }))
@@ -61,23 +62,20 @@ class WholePage extends Component {
   }
 
   render () {
+    let page = null
+    if (this.state.noCard) {
+      page = <AddCard />
+    }
+
     console.log('noCard ', this.state.noCard, this.state.onCreatePage)
     return (
       <main>
         <div className='App'>
           <Header
             clickHandler={this.switchPage.bind(this)}
-            text={
-              this.state.noCard || this.state.onCreatePage
-                ? 'Start Review'
-                : 'Add'
-            }
+            text={page || this.state.onCreatePage ? 'Start Review' : 'Add'}
           />
-          {this.state.noCard || this.state.onCreatePage ? (
-            <AddCard />
-          ) : (
-            <ReviewCard />
-          )}
+          {page || this.state.onCreatePage ? <AddCard /> : <ReviewCard  clickHandler={this.switchPage.bind(this)}/>}
         </div>
         <footer>
           <p className='footer-text'>{this.state.username}</p>

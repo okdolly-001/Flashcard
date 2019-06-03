@@ -56,22 +56,6 @@ p.correct {
   font-size: 0.9em;
   font-weight: bold;
 }
-.wrong-card {
-  width: 60%;
-  height: 60%;
-  background-color: pink;
-  border: 3px solid paleturquoise;
-  text-align: center;
-  display: flex;
-  align-items: center;
-}
-
-p.wrong {
-  margin: auto;
-  font-size: 0.9em;
-  color: #ff00bf;
-  font-weight: bold;
-}
 
 .card-container .front,
 .card-container .back {
@@ -133,10 +117,6 @@ p.wrong {
   p.correct {
     font-size: 0.6em;
   }
-
-  p.wrong {
-    font-size: 0.6em;
-  }
 }
 
 /**iPhone 6/7/8 */
@@ -156,7 +136,6 @@ p.wrong {
     margin-bottom: 3%;
   }
 }
-
 
 /**Computer */
 @media screen and (min-width: 1000px) {

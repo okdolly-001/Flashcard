@@ -45,8 +45,7 @@ app.use(
     stats: 'errors-only',
     noInfo: true,
     historyApiFallback: false
-  }),
-  login.printURL
+  })
 )
 app.get('/auth/google', passport.authenticate('google', { scope: ['profile'] }))
 

@@ -1,0 +1,38 @@
+:root {
+  --darker-purple: #606b9b;
+  --light-purple: #b191d4;
+  --green: #70c7a9;
+  --gradient: linear-gradient(#606b9b, #b191d4);
+}
+
+* {
+  box-sizing: border-box;
+}
+*:before,
+*:after {
+  box-sizing: border-box;
+}
+html,
+body {
+  padding: 0;
+  min-height: 100vh;
+  background: var(--darker-purple);
+  position: relative;
+}
+
+.App {
+  min-height: 80vh;
+  overflow: hidden;
+  width: 100%;
+  display: flex;
+  background: white;
+  flex-direction: column;
+  clear: both;
+  padding-bottom: 0.5vh;
+}
+
+main {
+  position: relative;
+  min-height: 100vh;
+  background: var(--darker-purple);
+}

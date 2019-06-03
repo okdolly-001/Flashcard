@@ -1,0 +1,179 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  width: 80%;
+}
+
+.card {
+  overflow: hidden;
+  text-align: center;
+  word-wrap: break-word;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.card-container {
+  font-size: 33px;
+  height: 9em;
+  margin-top: 5%;
+  width: 75%;
+  position: relative;
+  transform-style: preserve-3d;
+  box-sizing: border-box;
+}
+
+.textarea-card {
+  border: 2px solid grey;
+  margin-top: 3%;
+  width: 75%;
+  font-size: 30px;
+  height: 6em;
+  padding: 0.5em;
+}
+
+.check-answer {
+  display: flex;
+  border: 2px solid grey;
+  justify-content: center;
+  align-items: center;
+}
+.correct-card {
+  width: 60%;
+  height: 60%;
+  background-color: greenyellow;
+  border: 3px solid green;
+  text-align: center;
+  display: flex;
+  align-items: center;
+}
+
+p.correct {
+  margin: auto;
+  color: green;
+  font-size: 0.9em;
+  font-weight: bold;
+}
+.wrong-card {
+  width: 60%;
+  height: 60%;
+  background-color: pink;
+  border: 3px solid paleturquoise;
+  text-align: center;
+  display: flex;
+  align-items: center;
+}
+
+p.wrong {
+  margin: auto;
+  font-size: 0.9em;
+  color: #ff00bf;
+  font-weight: bold;
+}
+
+.card-container .front,
+.card-container .back {
+  box-sizing: border-box;
+  border: 2px solid grey;
+  display: flex;
+  width: 100%;
+  height: 100%;
+  /* box-shadow: 10px 10px 5px #5f4d63; */
+  position: absolute;
+  backface-visibility: hidden;
+  transform-style: preserve-3d;
+  transition: -webkit-transform ease 500ms;
+  transition: transform ease 500ms;
+}
+.card-container .front {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 2;
+  font-size: 20px;
+  transform: rotateY(0deg);
+  /* front tile styles go here! */
+}
+.card-container .back {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transform: rotateY(-180deg);
+  font-size: 20px;
+  /* back tile styles go here! */
+}
+.flip-svg {
+  position: absolute;
+  top: 0px;
+  right: 0px;
+}
+
+.card-container.flipped .front {
+  transform: rotateY(180deg);
+}
+.card-container.flipped .back {
+  transform: rotateY(0deg);
+}
+
+/**iPhone 5 */
+@media screen and (max-device-width: 320px) {
+  .card-container {
+    height: 5em;
+    margin-top: 10%;
+    margin-bottom: 3%;
+  }
+  .textarea-card {
+    margin-top: 5%;
+    font-size: 15px;
+    height: 7em;
+    padding: 1em;
+  }
+  p.correct {
+    font-size: 0.6em;
+  }
+
+  p.wrong {
+    font-size: 0.6em;
+  }
+}
+
+/**iPhone 6/7/8 */
+@media screen and (device-width: 375px) and (device-height: 667px) {
+  .textarea-card {
+    border: 2px solid grey;
+    margin-top: 3%;
+    width: 75%;
+    font-size: 15px;
+    height: 10em;
+    padding: 1em;
+  }
+  .card-container {
+    font-size: 30px;
+    height: 7em;
+    margin-top: 10%;
+    margin-bottom: 3%;
+  }
+}
+
+
+/**Computer */
+@media screen and (min-width: 1000px) {
+  .card-container {
+    width: 50%;
+  }
+  .textarea-card {
+    width: 50%;
+  }
+}
+
+/**iPad*/
+@media screen and (min-device-width: 768px) and (min-device-height: 1024px) {
+  .card-container {
+    margin-top: 15%;
+  }
+  .textarea-card {
+    margin-top: 4%;
+  }
+}

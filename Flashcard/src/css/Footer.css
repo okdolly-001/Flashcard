@@ -1,0 +1,18 @@
+:root {
+  --darker-purple: #606b9b;
+}
+
+footer {
+  background-color: var(--darker-purple);
+  text-align: center;
+  width: 100%;
+  bottom: 0;
+}
+
+.footer-text {
+  color: white;
+  padding: 2%;
+  align-self: center;
+  font-family: Helvetica;
+  font-size: 1.5em;
+}

@@ -146,9 +146,6 @@ class ReviewCard extends React.Component {
     const errorMessage = this.state.showError
       ? 'Please fill in a phrase and hit Enter key'
       : ''
-    if (Object.keys(this.state.currentCard).length == 0) {
-      return <div>Loading...</div>
-    }
     return (
       <div className='App'>
         <div className='card'>

@@ -96,18 +96,18 @@ p.lango-header {
 
   p.lango-header {
     font-size: 5em;
-    margin-top: 1%;
+    margin-top: 2%;
     margin-left: 40%;
   }
 
   #header-button {
-    margin-top: 3%;
+    margin-top: 4%;
     margin-left: 4%;
     width: 12%;
     display: inline-block;
   }
   #log-out-button {
-    margin-top: 3%;
+    margin-top: 4%;
     margin-left: 60%;
     width: 10%;
     display: inline-block;

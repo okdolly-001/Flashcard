@@ -25,10 +25,16 @@ class WholePage extends Component {
   }
 
   switchPage = () => {
-    this.makeRequest('dump', 'GET', this.loadCards)
-    this.setState(prevState => ({
-      onCreatePage: !prevState.onCreatePage
-    }))
+    if (this.state.onCreatePage) {
+      this.makeRequest('dump', 'GET', this.loadCards)
+      this.setState(prevState => ({
+        onCreatePage: !prevState.onCreatePage
+      }))
+    } else {
+      this.setState(prevState => ({
+        onCreatePage: !prevState.onCreatePage
+      }))
+    }
   }
 
   createRequest = (method, url) => {
@@ -52,7 +58,7 @@ class WholePage extends Component {
       }
     }
     xhr.onerror = function () {
-      alert('Woops, there was an error making the request.')
+      // alert('Woops, there was an error making the request.')
     }
     xhr.send()
   }
@@ -75,7 +81,11 @@ class WholePage extends Component {
             clickHandler={this.switchPage.bind(this)}
             text={page || this.state.onCreatePage ? 'Start Review' : 'Add'}
           />
-          {page || this.state.onCreatePage ? <AddCard /> : <ReviewCard  clickHandler={this.switchPage.bind(this)}/>}
+          {page || this.state.onCreatePage ? (
+            <AddCard />
+          ) : (
+            <ReviewCard clickHandler={this.switchPage.bind(this)} />
+          )}
         </div>
         <footer>
           <p className='footer-text'>{this.state.username}</p>

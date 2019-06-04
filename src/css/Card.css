@@ -17,9 +17,10 @@
 
 .card-container {
   font-size: 33px;
-  height: 9em;
+  height: 6em;
   margin-top: 5%;
   width: 75%;
+  font-family: Helvetica;
   position: relative;
   transform-style: preserve-3d;
   box-sizing: border-box;
@@ -30,7 +31,8 @@
   margin-top: 3%;
   width: 75%;
   font-size: 30px;
-  height: 6em;
+  font-family: Helvetica;
+  height: 5em;
   padding: 0.5em;
 }
 
@@ -137,6 +139,44 @@ p.correct {
   }
 }
 
+
+
+/**iPad*/
+@media screen and (min-width: 768px) and (min-height: 1024px) {
+  .card-container {
+    height: 6em;
+    margin-top: 15%;
+  }
+  .textarea-card {
+    margin-top: 4%;
+  }
+}
+/** IPhone X */
+@media screen and (device-height: 812px) and (device-width:375px) {
+  .card-container {
+    height: 6em;
+    margin-top: 15%;
+  }
+  .textarea-card {
+    margin-top: 4%;
+  }
+}
+
+/** IPad Pro */
+@media screen and (device-height: 1366px) and (device-width: 1024px)  {
+  .card-container {
+    height: 15em;
+    font-size: 40px;
+    width:80%;
+    margin-top: 15%;
+  }
+  .textarea-card {
+    margin-top: 4%;
+    width:80%;
+    height:8em;
+  }
+
+}
 /**Computer */
 @media screen and (min-width: 1000px) {
   .card-container {
@@ -144,15 +184,5 @@ p.correct {
   }
   .textarea-card {
     width: 50%;
-  }
-}
-
-/**iPad*/
-@media screen and (min-device-width: 768px) and (min-device-height: 1024px) {
-  .card-container {
-    margin-top: 15%;
-  }
-  .textarea-card {
-    margin-top: 4%;
   }
 }

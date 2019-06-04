@@ -41,7 +41,7 @@
   .textarea-add {
     color: grey;
     font-size: 30px;
-    height: 5.6em;
+    height: 5.3em;
     width: 80%;
     line-height: 1.5;
     overflow: hidden;
@@ -100,6 +100,7 @@
     flex-wrap: wrap;
   }
 }
+
 
 @media (device-height: 1366px) and (device-width: 1024px) {
   .textarea-add {

@@ -21,18 +21,57 @@ body {
 }
 
 .App {
-  min-height: 80vh;
-  overflow: hidden;
+  min-height: 76vh;
   width: 100%;
   display: flex;
   background: white;
   flex-direction: column;
   clear: both;
   padding-bottom: 0.5vh;
+  overflow: hidden;
 }
 
 main {
   position: relative;
   min-height: 100vh;
   background: var(--darker-purple);
+}
+
+/* iPhone 5 */
+@media screen and (max-device-height: 640px) and (max-device-width: 320px) {
+  html,
+  body {
+    overflow: hidden;
+  }
+  .App {
+    min-height: 75vh;
+  }
+}
+/**iPhone 6/7/8 */
+@media screen and (device-width: 375px) and (device-height: 667px) {
+  html,
+  body {
+    overflow: hidden;
+  }
+  .App {
+    min-height: 75vh;
+  }
+}
+
+/** IPad */
+@media screen and (device-height: 1024px) and (device-width:768px) {
+  html,
+  body {
+    overflow: hidden;
+  }
+  .App {
+    min-height: 80vh;
+  }
+}
+
+/** IPad Pro */
+@media screen and (device-height: 1366px) and (device-width: 1024px) {
+  .App {
+    min-height: 85vh;
+  }
 }

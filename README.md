@@ -6,9 +6,12 @@
   > The entry point is the file webpack looks for to start building your Javascript bundle.
 
 ## Usage
-1. `node server.js`
 
-2. Open [http://server162.site:51375](http://server162.site:51375).
+1. npm install
+
+2. `node server.js`
+
+3. Open [http://localhost:51375](http://localhost:51375).
 
 Credit:
 

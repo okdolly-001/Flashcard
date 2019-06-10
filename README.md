@@ -1,4 +1,12 @@
-## Flashcard
+## Flashcard: a React,Express,Sqlite app
+
+![splash](https://user-images.githubusercontent.com/18589970/59184020-0fb24100-8b22-11e9-870c-c07379973462.png)
+
+![START](https://user-images.githubusercontent.com/18589970/59184022-0fb24100-8b22-11e9-8932-20d90acb26ca.png)
+
+![ANSWER](https://user-images.githubusercontent.com/18589970/59184015-0fb24100-8b22-11e9-9073-d0f0878fefe3.png)
+
+![correctA](https://user-images.githubusercontent.com/18589970/59184018-0fb24100-8b22-11e9-90fd-eaa9f15d6ada.png)
 
 - server.js : express server and sqlite database
 - public/index.html: entry point

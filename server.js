@@ -85,7 +85,7 @@ app.get('/dump', api.dumpHandler)
 app.get('/get_user', api.getUserHandler)
 app.use(api.fileNotFound)
 
-const PORT = process.env.PORT || 51375
+const PORT = process.env.PORT || 5000
 initDb(function (err) {
   if (err) console.log(err)
   app.listen(PORT, () => console.log('API Up and running on port ' + PORT))

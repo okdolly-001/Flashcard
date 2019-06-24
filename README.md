@@ -15,11 +15,20 @@
 
 ## Usage
 
-1. npm install
+1. Get [Cloud Translation API from Google](www.console.developers.google.com/apis) client ID and secret, fill in  line 17-18 in `server.js`
 
-2. `node server.js`
+``
+const GOOGLE_CLIENT_ID = '' ``
 
-3. Open [http://localhost:51375](http://localhost:51375).
+``
+const CLIENT_SECRET = ''
+``
+
+2. npm install
+
+3. `node server.js`
+
+4. Open [http://localhost:5000](http://localhost:5000).
 
 Credit:
 

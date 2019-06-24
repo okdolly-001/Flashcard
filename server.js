@@ -14,10 +14,11 @@ const api = require('./routes/api')
 const login = require('./routes/login')
 const compiler = webpack(webpackConfig)
 
+const GOOGLE_CLIENT_ID = ''
+const CLIENT_SECRET = ''
 const googleLoginData = {
-  clientID:
-    '62580539901-t6ceuclge0239q85nnudd74rgu7od93t.apps.googleusercontent.com',
-  clientSecret: 'KYATJuneMmk3OItFZqBuOyeq',
+  clientID: GOOGLE_CLIENT_ID,
+  clientSecret: CLIENT_SECRET,
   callbackURL: '/auth/redirect'
 }
 
